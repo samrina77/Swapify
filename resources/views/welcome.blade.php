@@ -65,6 +65,18 @@
             text-align:center;
             padding:20px;
         }
+       
+        nav a {
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #0d6efd !important;
+    background-color: rgba(255,255,255,0.15);
+}
 }
 
     </style>
