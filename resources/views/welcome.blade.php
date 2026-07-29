@@ -65,6 +65,8 @@
             text-align:center;
             padding:20px;
         }
+}
+
     </style>
 </head>
 <body>
@@ -77,7 +79,7 @@
         <a href="#">Products</a>
         <a href="#">About</a>
         <a href="#">Contact</a>
-        <a href="#">Login</a>
+       
     </nav>
 </header>
 
