@@ -117,16 +117,28 @@ body{
 
 <h2>Welcome to Swapify</h2>
 
-<form>
+<form action="{{ route('login.store') }}" method="POST">
+    @csrf
 
-<input type="email" class="form-control" placeholder="Enter Email">
+    <input
+        type="email"
+        name="email"
+        class="form-control"
+        placeholder="Enter Email"
+        required
+    >
 
-<input type="password" class="form-control" placeholder="Enter Password">
+    <input
+        type="password"
+        name="password"
+        class="form-control"
+        placeholder="Enter Password"
+        required
+    >
 
-<button type="submit" class="btn-login">
-Login
-</button>
-
+    <button type="submit" class="btn-login">
+        Login
+    </button>
 </form>
 
 <hr>
@@ -140,10 +152,8 @@ Continue with Phone Number
 </button>
 
 <div class="signup">
-Don't have an account?
-<a href="/register">Sign Up</a>
-</div>
-
+    Don't have an account?
+    <a href="{{ route('signup') }}">Sign Up</a>
 </div>
 
 </body>
