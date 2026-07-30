@@ -175,7 +175,7 @@ Swapify
 
 <h1>Welcome to Swapify</h1>
 
-<p>Exchange, Buy and Sell Products Easily.</p>
+<p><Wbr>Where Every Skill Finds a Learner.</Wbr></p>
 
 <a href="{{ route('login') }}" class="btn">
 
