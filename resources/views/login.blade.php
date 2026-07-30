@@ -24,16 +24,12 @@ body{
 
     background:
     linear-gradient(
-        rgba(255,255,255,0.30),
-        rgba(255,255,255,0.30)
-    ),
-    url('/images/login-bg.jpg');
+        135deg,
+        rgba(69,89,71,0.85),
+        rgba(134,70,34,0.75)
+    );
 
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
 }
-
 
 /* Login Glass Box */
 
@@ -41,22 +37,26 @@ body{
 
     width:400px;
 
-    background:rgba(212,189,161,0.30);
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,0.18),
+        rgba(212,189,161,0.25)
+    );
 
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
 
     padding:35px;
 
     border-radius:20px;
 
-    border:2px solid rgba(255,255,255,0.35);
+    border:1px solid rgba(255,255,255,0.35);
 
     box-shadow:
-    0 15px 35px rgba(0,0,0,0.25);
+    0 15px 40px rgba(0,0,0,0.3);
 
 }
-
 
 /* Heading */
 
@@ -64,33 +64,42 @@ body{
 
     text-align:center;
 
-    color:#383330;
+    color:white;
 
-    font-weight:bold;
+    font-size:32px;
+
+    font-weight:900;
+
+    letter-spacing:1px;
 
     margin-bottom:30px;
 
+    text-shadow:
+    0 3px 10px rgba(0,0,0,0.3);
+
 }
-
-
 
 /* Input */
 
 .form-control{
 
+    width:100%;
+
     height:50px;
 
-    margin-bottom:15px;
+    margin-bottom:18px !important;
 
     border-radius:12px;
 
     border:none;
 
-    background:rgba(255,255,255,0.92);
+    background:rgba(255,255,255,0.85);
 
     color:#383330;
 
-    padding-left:18px;
+    padding:0 18px;
+
+    font-size:16px;
 
 }
 
