@@ -176,17 +176,19 @@
             margin-bottom: 12px;
         }
 
-        .google-button {
-            background: #C78653;
-        }
-
+        
         .phone-button {
             background: #864622;
         }
-
-        .google-button:hover {
-            background: #ae7043;
+        .phone-button {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
         }
+
+        
 
         .phone-button:hover {
             background: #703919;
@@ -388,14 +390,11 @@
         OR
     </div>
 
-    <button type="button" class="social-button google-button">
-        Continue with Google
-    </button>
+    
 
-    <button type="button" class="social-button phone-button">
-        Continue with Phone Number
-    </button>
-
+    <a href="{{ route('phone.signup') }}" class="social-button phone-button">
+    Continue with Phone Number
+</a>
     <p class="login-text">
         Already have an account?
 
