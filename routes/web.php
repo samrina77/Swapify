@@ -74,3 +74,54 @@ Route::post('/logout', function (Request $request) {
     return redirect()->route('login');
 
 })->name('logout');
+
+Route::get('/phone-login', function () {
+    return view('phone-login');
+})->name('phone.login');
+
+
+
+Route::post('/phone/send-otp', function (Request $request) {
+
+    $request->validate([
+        'phone' => 'required|min:10|max:15'
+    ]);
+
+    session([
+        'phone_number' => $request->phone,
+        'demo_otp' => '123456'
+    ]);
+
+    return redirect()->route('verify.otp');
+
+})->name('phone.sendOtp');
+
+
+Route::get('/verify-otp', function () {
+
+    if (!session()->has('phone_number')) {
+        return redirect()->route('phone.login');
+    }
+
+    return view('verify-otp');
+
+})->name('verify.otp');
+
+
+Route::post('/verify-otp', function (Request $request) {
+
+    $request->validate([
+        'otp' => 'required|digits:6'
+    ]);
+
+    if ($request->otp !== session('demo_otp')) {
+        return back()->withErrors([
+            'otp' => 'Invalid OTP. Use 123456.'
+        ]);
+    }
+
+    session()->forget('demo_otp');
+
+    return redirect()->route('dashboard');
+
+})->name('verify.otp.submit');

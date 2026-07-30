@@ -62,34 +62,23 @@ body{
     background:#383330; /* Black Coffee */
 }
 
-.google-btn{
-    width:100%;
-    height:48px;
-    border:none;
-    border-radius:10px;
-    margin-top:12px;
-    background:#C78853; /* Deer */
-    color:white;
-    font-weight:bold;
-}
-
-.google-btn:hover{
-    background:#864622; /* Russet */
-}
-
 .phone-btn{
+    display:block;
     width:100%;
-    height:48px;
-    border:none;
-    border-radius:10px;
-    margin-top:12px;
-    background:#864622; /* Russet */
+    padding:16px;
+    margin-top:20px;
+    background:#9b4f3f;
     color:white;
+    text-align:center;
+    text-decoration:none;
+    border-radius:15px;
+    font-size:20px;
     font-weight:bold;
 }
 
 .phone-btn:hover{
-    background:#383330; /* Black Coffee */
+    background:#7f3f33;
+    color:white;
 }
 
 .signup{
@@ -143,13 +132,10 @@ body{
 
 <hr>
 
-<button class="google-btn">
-Continue with Google
-</button>
 
-<button class="phone-btn">
-Continue with Phone Number
-</button>
+<a href="{{ route('phone.login') }}" class="phone-btn">
+    Continue with Phone Number
+</a>
 
 <div class="signup">
     Don't have an account?
