@@ -12,11 +12,6 @@ Route::get('/', function () {
 
 Route::view('/login', 'login')->name('login');
 
-<<<<<<< HEAD
-Route::get('/', function () {
-    return view('about');
-});
-=======
 Route::view('/signup', 'signup')->name('signup');
 
 Route::post('/signup', function (Request $request) {
@@ -156,4 +151,5 @@ Route::post('/phone-signup', function (Request $request) {
     return redirect()->route('dashboard');
 
 })->name('phone.signup.store');
->>>>>>> 3eec74b64edf0cd12756ed4cc816d6530b5b748d
+
+Route::view('/about', 'about')->name('about');
