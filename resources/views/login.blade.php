@@ -143,10 +143,6 @@ body{
 
 <hr>
 
-<button class="google-btn">
-Continue with Google
-</button>
-
 <button class="phone-btn">
 Continue with Phone Number
 </button>
