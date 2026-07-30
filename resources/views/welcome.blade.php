@@ -220,17 +220,14 @@ Swapify
 
 <ul>
 <li><a href="/">Home</a></li>
-<li><a href="#">Products</a></li>
+
 
 <li><a href="{{ url('/about') }}">About</a></li>
 <li><a href="{{ url('/contact') }}">Contact</a></li>
 
 
 
-<<<<<<< HEAD
-=======
-<li><a href="#">Contact</a></li>
->>>>>>> e12ad59ddc231412ddc076d9a2df32fdbf7e17ae
+
 <li><a href="{{ route('login') }}">Login</a></li>
 </ul>
 
