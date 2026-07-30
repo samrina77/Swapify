@@ -132,9 +132,7 @@ body{
 
 <hr>
 
-<button class="google-btn">
-Continue with Google
-</button>
+
 
 <a href="{{ route('phone.login') }}" class="phone-btn">
     Continue with Phone Number
