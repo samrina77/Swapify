@@ -15,86 +15,132 @@ body{
     justify-content:center;
     align-items:center;
     font-family:Arial,sans-serif;
-    background:#CDD9C3; /* Shamrock Shake */
+
+    background:url('/images/login-bg.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
 }
 
 .login-box{
     width:400px;
-    background:#D4BDA1; /* Dark Vanilla */
-    padding:35px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(56,51,48,.25);
-    border:2px solid #455947;
-}
 
-.login-box h2{
-    text-align:center;
-    color:#455947; /* Woodlands */
-    margin-bottom:25px;
-    font-weight:bold;
+    background:rgba(212,189,161,.30);
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    padding:35px;
+
+    border-radius:20px;
+
+    border:2px solid rgba(255,255,255,.35);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
 }
 
 .form-control{
-    height:48px;
-    margin-bottom:15px;
-    border-radius:10px;
-    border:1px solid #455947;
-    background:#fffaf5;
-}
 
-.form-control:focus{
-    border-color:#864622;
-    box-shadow:0 0 8px rgba(134,70,34,.3);
+    height:50px;
+
+    margin-bottom:15px;
+
+    border-radius:12px;
+
+    border:none;
+
+    background:rgba(255,255,255,.92);
+
+    color:#383330;
+
 }
 
 .btn-login{
+
     width:100%;
-    height:48px;
+
+    height:50px;
+
     border:none;
-    border-radius:10px;
-    background:#455947; /* Woodlands */
+
+    border-radius:12px;
+
+    background:#455947;
+
     color:white;
+
+    font-size:17px;
+
     font-weight:bold;
-    transition:0.3s;
+
+    transition:.3s;
+
 }
 
 .btn-login:hover{
-    background:#383330; /* Black Coffee */
+
+    background:#864622;
+
 }
 
 .phone-btn{
-    display:block;
+
     width:100%;
-    padding:16px;
-    margin-top:20px;
-    background:#9b4f3f;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:12px;
+
+    margin-top:12px;
+
+    background:#864622;
+
     color:white;
-    text-align:center;
-    text-decoration:none;
-    border-radius:15px;
-    font-size:20px;
+
+    font-size:17px;
+
     font-weight:bold;
+
+    transition:.3s;
+
 }
 
 .phone-btn:hover{
-    background:#7f3f33;
-    color:white;
-}
 
+    background:#383330;
+
+}
 .signup{
+
     text-align:center;
-    margin-top:20px;
+
+    margin-top:22px;
+
+    color:white;
+
+    font-weight:600;
+
 }
 
 .signup a{
-    color:#455947;
-    font-weight:bold;
+
+    color:#FFD79A;
+
     text-decoration:none;
+
+    font-weight:bold;
+
 }
 
 .signup a:hover{
-    color:#864622;
+
+    color:white;
+
 }
+
       
 
 </style>
