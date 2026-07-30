@@ -7,3 +7,7 @@ Route::get('/', function () {
 });
 
 Route::view('/login', 'login')->name('login');
+
+Route::get('/', function () {
+    return view('about');
+});
