@@ -153,3 +153,6 @@ Route::post('/phone-signup', function (Request $request) {
 })->name('phone.signup.store');
 
 Route::view('/about', 'about')->name('about');
+Route::get('/', function () {
+    return view('contact');
+});
