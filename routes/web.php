@@ -166,8 +166,6 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::view('/contact', 'contact')->name('contact');
-
 use App\Http\Controllers\AuthController;
 
 Route::get('/forgot-password',[AuthController::class,'forgotPassword'])

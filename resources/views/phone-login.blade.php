@@ -121,6 +121,12 @@
     </a>
 
 </div>
+<div class="text-end mt-2">
+    <a href="{{ route('forgot.password') }}"
+       style="text-decoration:none;color:white;font-size:14px;">
+        Forgot Password?
+    </a>
+</div>
 
 </body>
 </html>
