@@ -1127,13 +1127,13 @@
         <div class="form-actions">
 
             <button
-                type="submit"
-                class="save-button"
-                id="saveButton"
-            >
-                Save & Continue
-            </button>
-
+    type="button"
+    class="save-button"
+    id="saveButton"
+    onclick="window.location.href='{{ route('dashboard') }}'"
+>
+    Save & Continue
+</button>
         </div>
 
         <div
