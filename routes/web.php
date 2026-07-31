@@ -98,3 +98,13 @@ Route::post(
 
 Route::view('/phone-login', 'phone-login')
     ->name('phone.login');
+
+    Route::view('/phone-signup', 'phone-signup')
+    ->name('phone.signup');
+
+    Route::post('/phone-login', function () {
+    return redirect()->route('otp.verify');
+})->name('phone.sendotp');
+
+Route::view('/verify-otp', 'verify-otp')
+    ->name('otp.verify');
