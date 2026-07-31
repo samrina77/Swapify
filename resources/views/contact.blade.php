@@ -88,6 +88,71 @@ button:hover{
 <button type="submit">Send Message</button>
 
 </form>
+<a href="{{ url('/') }}" class="btn">Back to Home</a>
+  </a>
+
+<style>
+ .btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#C78853;      
+    color:white;
+    padding:12px 25px;
+    text-decoration:none;
+    border-radius:8px;
+    
+}
+
+.btn:hover{
+    background:#864622;     
+    
+}
+
+
+</style>
+    </a>
+</div> 
+
+</a>
+</div>
+
+<style>
+.btn-home{
+    display:inline-block;
+    background:#C78853;
+    color:white;
+    padding:12px 25px;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.btn-home:hover{
+    background:#864622;
+}
+</style>
+<style>
+.back-home-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#864622 !important;
+    color:white !important;
+    padding:12px 28px;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.back-home-btn:hover{
+    background:#C78853 !important;
+}
+
+.back-home-btn:active{
+    background:#6D3417 !important;
+}
+
 
 </div>
 
