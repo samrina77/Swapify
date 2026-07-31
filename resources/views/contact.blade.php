@@ -88,6 +88,37 @@ button:hover{
 <button type="submit">Send Message</button>
 
 </form>
+<div style="margin-top:20px; text-align:left;">
+    <a href="{{ url('/') }}" style="
+        display:inline-block;
+        background:#C78853;
+        color:white;
+        padding:10px 20px;
+        text-decoration:none;
+        border-radius:8px;
+        font-weight:bold;
+    ">
+        Back to Home
+    </a>
+</div> 
+</div>
+
+<style>
+.btn-home{
+    display:inline-block;
+    background:#C78853;
+    color:white;
+    padding:12px 25px;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.btn-home:hover{
+    background:#864622;
+}
+</style>
 
 </div>
 

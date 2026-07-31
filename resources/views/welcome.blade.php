@@ -223,7 +223,10 @@ Swapify
 
 
 <li><a href="{{ url('/about') }}">About</a></li>
-<li><a href="{{ url('/contact') }}">Contact</a></li>
+<li><a href="{{ route('contact') }}">Contact</a></li>
+
+
+<li><a href="#">Products</a></li>
 
 
 

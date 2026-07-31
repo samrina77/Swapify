@@ -165,3 +165,5 @@ Route::get('/', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::view('/contact', 'contact')->name('contact');
