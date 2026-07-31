@@ -281,8 +281,12 @@ Login
 
 
 </form>
-
-
+<div style="text-align:center; margin-top:10px; margin-bottom:15px;">
+    <a href="{{ route('forgot.password') }}"
+       style="color:white; text-decoration:none; font-weight:bold">
+        Forgot Password?
+    </a>
+</div>
 
 <hr>
 
