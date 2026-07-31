@@ -38,6 +38,7 @@ h1{
 
 h2{
     color:#864622;
+    margin-top:30px;
 }
 
 p{
@@ -45,7 +46,7 @@ p{
     text-align:justify;
 }
 
-ul{
+ul,ol{
     line-height:2;
 }
 
@@ -56,7 +57,8 @@ ul{
     padding:12px 25px;
     text-decoration:none;
     border-radius:8px;
-    margin-top:20px;
+    margin-top:25px;
+    transition:.3s;
 }
 
 .btn:hover{
@@ -71,8 +73,8 @@ ul{
     margin-top:40px;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <div class="navbar">
@@ -84,44 +86,105 @@ ul{
 <h1>About Swapify</h1>
 
 <p>
-<b>Swapify</b> is a skill-sharing platform where people can exchange knowledge,
-learn new skills, and connect with others who share similar interests.
-Our platform encourages collaborative learning in a simple and friendly environment.
+<b>Swapify</b> is an innovative skill-sharing platform where people can learn,
+teach, and exchange valuable skills with one another. Our platform connects
+individuals who are eager to grow personally and professionally through
+collaborative learning.
 </p>
 
 <h2>Our Mission</h2>
 
 <p>
-To create a community where everyone has the opportunity to teach, learn,
-and grow together through skill sharing.
+Our mission is to create an inclusive learning environment where knowledge is
+shared freely and everyone has the opportunity to improve their skills,
+build confidence, and achieve their goals.
 </p>
 
 <h2>Our Vision</h2>
 
 <p>
-We believe every person has a valuable skill to share.
-Our vision is to make learning accessible, practical, and enjoyable for everyone.
+We envision a world where learning has no limits and every individual can
+share their talents while discovering new opportunities through skill exchange.
 </p>
+
+<h2>Our Story</h2>
+
+<p>
+Swapify was created with the belief that everyone has something valuable to
+teach and something new to learn. We wanted to build a platform where people
+can connect, collaborate, and inspire each other through practical knowledge
+and real-life experiences.
+</p>
+
+<h2>What We Offer</h2>
+
+<ul>
+<li> Skill Sharing Platform</li>
+<li> Learning Opportunities</li>
+<li> Community Collaboration</li>
+<li> User-Friendly Experience</li>
+<li> Personal & Professional Growth</li>
+</ul>
+
+<h2>How Swapify Works</h2>
+
+<ol>
+<li>Create your account.</li>
+<li>Browse available skills.</li>
+<li>Connect with skilled users.</li>
+<li>Exchange knowledge and experiences.</li>
+<li>Learn, teach, and grow together.</li>
+</ol>
+
+<h2>Our Core Values</h2>
+
+<ul>
+<li> Collaboration</li>
+<li> Continuous Learning</li>
+<li> Inclusiveness</li>
+<li> Innovation</li>
+<li> Trust & Respect</li>
+</ul>
 
 <h2>Why Choose Swapify?</h2>
 
-<ul>
-<li>✔ Skill Exchange</li>
-<li>✔ Easy Learning</li>
-<li>✔ Friendly Community</li>
-<li>✔ Secure Platform</li>
-<li>✔ Personal Growth</li>
-</ul>
+<p>
+Swapify offers an easy, secure, and collaborative learning experience.
+Unlike traditional learning methods, our platform encourages users to
+actively participate by both teaching and learning from one another.
+</p>
+
+<h2>Who Can Join?</h2>
+
+<p>
+Students, teachers, professionals, freelancers, artists, entrepreneurs,
+and anyone passionate about learning or teaching can become a part of the
+Swapify community.
+</p>
+
+<h2>Our Commitment</h2>
+
+<p>
+We are committed to providing a safe, friendly, and reliable platform
+where users can confidently exchange skills, build meaningful connections,
+and grow together.
+</p>
+
+<h2>Join Our Community</h2>
+
+<p>
+Become a member of Swapify today and start your journey of learning,
+sharing, and growing. Together, we can create a stronger community where
+every skill has value.
+</p>
 
 <a href="/" class="btn">Back to Home</a>
 
 </div>
 
 <div class="footer">
-© 2026 Swapify | Where Every Skill Finds a Learner.
+© 2026 Swapify | Learn • Share • Grow Together
 </div>
 
 </body>
 </html>
-
-            
