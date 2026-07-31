@@ -5,17 +5,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::view('/about', 'about')->name('about');
+
+Route::view('/contact', 'contact')->name('contact');
 
 Route::view('/login', 'login')->name('login');
 
 Route::view('/signup', 'signup')->name('signup');
 
 Route::post('/signup', function (Request $request) {
-
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255|unique:users,email',
@@ -35,144 +39,62 @@ Route::post('/signup', function (Request $request) {
     return redirect()
         ->route('dashboard')
         ->with('success', 'Account created successfully.');
-
 })->name('signup.store');
-Route::post('/login', function (Request $request) {
 
+Route::post('/login', function (Request $request) {
     $credentials = $request->validate([
         'email' => 'required|email',
         'password' => 'required',
     ]);
 
     if (Auth::attempt($credentials)) {
-
         $request->session()->regenerate();
 
         return redirect()->route('dashboard');
-
     }
 
-    return back()->withErrors([
-        'email' => 'Invalid email or password.',
-    ]);
-
+    return back()
+        ->withErrors([
+            'email' => 'Invalid email or password.',
+        ])
+        ->onlyInput('email');
 })->name('login.store');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})
-    ->middleware('auth')
-    ->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::view('/dashboard', 'dashboard')
+        ->name('dashboard');
 
-Route::post('/logout', function (Request $request) {
+    Route::view('/complete-profile', 'complete-profile')
+        ->name('profile.setup');
 
-    Auth::logout();
+    Route::post('/complete-profile', function (Request $request) {
+        // Profile validation and saving code goes here.
+    })->name('profile.store');
 
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+    Route::post('/logout', function (Request $request) {
+        Auth::logout();
 
-    return redirect()->route('login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-})->name('logout');
-
-Route::get('/phone-login', function () {
-    return view('phone-login');
-})->name('phone.login');
-
-
-
-Route::post('/phone/send-otp', function (Request $request) {
-
-    $request->validate([
-        'phone' => 'required|min:10|max:15'
-    ]);
-
-    session([
-        'phone_number' => $request->phone,
-        'demo_otp' => '123456'
-    ]);
-
-    return redirect()->route('verify.otp');
-
-})->name('phone.sendOtp');
-
-
-Route::get('/verify-otp', function () {
-
-    if (!session()->has('phone_number')) {
-        return redirect()->route('phone.login');
-    }
-
-    return view('verify-otp');
-
-})->name('verify.otp');
-
-
-Route::post('/verify-otp', function (Request $request) {
-
-    $request->validate([
-        'otp' => 'required|digits:6'
-    ]);
-
-    if ($request->otp !== session('demo_otp')) {
-        return back()->withErrors([
-            'otp' => 'Invalid OTP. Use 123456.'
-        ]);
-    }
-
-    session()->forget('demo_otp');
-
-    return redirect()->route('dashboard');
-
-})->name('verify.otp.submit');
-
-Route::view('/phone-signup', 'phone-signup')
-    ->name('phone.signup');
-
-Route::post('/phone-signup', function (Request $request) {
-
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'phone' => 'required|string|max:20|unique:users,phone',
-        'password' => 'required|string|min:8|confirmed',
-        'terms' => 'accepted',
-    ]);
-
-    $user = User::create([
-        'name' => $validated['name'],
-        'phone' => $validated['phone'],
-        'password' => Hash::make($validated['password']),
-    ]);
-
-    Auth::login($user);
-
-    $request->session()->regenerate();
-
-    return redirect()->route('dashboard');
-
-})->name('phone.signup.store');
-
-Route::view('/about', 'about')->name('about');
-Route::get('/', function () {
-    return view('contact');
+        return redirect()->route('login');
+    })->name('logout');
 });
 
+Route::get(
+    '/forgot-password',
+    [AuthController::class, 'forgotPassword']
+)->name('forgot.password');
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::post(
+    '/check-email',
+    [AuthController::class, 'checkEmail']
+)->name('check.email');
 
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::post(
+    '/update-password',
+    [AuthController::class, 'updatePassword']
+)->name('update.password');
 
-use App\Http\Controllers\AuthController;
-
-Route::get('/forgot-password',[AuthController::class,'forgotPassword'])
-->name('forgot.password');
-
-Route::post('/check-email',[AuthController::class,'checkEmail'])
-->name('check.email');
-
-Route::post('/update-password',[AuthController::class,'updatePassword'])
-->name('update.password');
+Route::view('/phone-login', 'phone-login')
+    ->name('phone.login');
