@@ -30,8 +30,8 @@ body{
 }
 
 .box{
-
     width:400px;
+    padding:35px;
 
     background:
     linear-gradient(
@@ -43,14 +43,9 @@ body{
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
 
-    padding:35px;
-
     border-radius:20px;
-
-    border:1px solid rgba(255,255,255,.35);
-
-    box-shadow:0 15px 40px rgba(0,0,0,.3);
-
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
 
 h2{
