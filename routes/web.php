@@ -167,3 +167,14 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::view('/contact', 'contact')->name('contact');
+
+use App\Http\Controllers\AuthController;
+
+Route::get('/forgot-password',[AuthController::class,'forgotPassword'])
+->name('forgot.password');
+
+Route::post('/check-email',[AuthController::class,'checkEmail'])
+->name('check.email');
+
+Route::post('/update-password',[AuthController::class,'updatePassword'])
+->name('update.password');
