@@ -88,19 +88,38 @@ button:hover{
 <button type="submit">Send Message</button>
 
 </form>
-<div style="margin-top:20px; text-align:left;">
-    <a href="{{ url('/') }}" style="
-        display:inline-block;
-        background:#C78853;
-        color:white;
-        padding:10px 20px;
-        text-decoration:none;
-        border-radius:8px;
-        font-weight:bold;
-    ">
-        Back to Home
+<a href="{{ url('/') }}" class="back-home-btn">
+    Back to Home
+</a>
+
+<style>
+.back-home-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#455947;      /* Green */
+    color:#F4E8D8;
+    padding:12px 28px;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.back-home-btn:hover{
+    background:#864622;      /* Brown */
+    color:white;
+}
+
+.back-home-btn:active{
+    background:#C78853;      /* Light Brown */
+}
+</style>
     </a>
 </div> 
+<a href="{{ url('/') }}" class="back-home-btn">
+    Back to Home
+</a>
 </div>
 
 <style>
@@ -119,6 +138,27 @@ button:hover{
     background:#864622;
 }
 </style>
+<style>
+.back-home-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#864622 !important;
+    color:white !important;
+    padding:12px 28px;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.back-home-btn:hover{
+    background:#C78853 !important;
+}
+
+.back-home-btn:active{
+    background:#6D3417 !important;
+}
+
 
 </div>
 
