@@ -255,6 +255,59 @@
                 grid-template-columns: 1fr;
             }
         }
+        .complete-profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 25px;
+    padding: 15px 30px;
+
+    background: linear-gradient(
+        135deg,
+        #864622,
+        #C78B53
+    );
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    border: 2px solid transparent;
+    border-radius: 30px;
+
+    box-shadow: 0 8px 20px rgba(134, 70, 34, 0.28);
+
+    transition: all 0.25s ease;
+}
+
+.complete-profile-btn span {
+    font-size: 21px;
+    transition: transform 0.25s ease;
+}
+
+.complete-profile-btn:hover {
+    background: #455947;
+    color: white;
+
+    border-color: #D4BDA1;
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 25px rgba(69, 89, 71, 0.32);
+}
+
+.complete-profile-btn:hover span {
+    transform: translateX(5px);
+}
+
+.complete-profile-btn:active {
+    transform: translateY(0);
+}
+        
     </style>
 </head>
 
@@ -287,9 +340,10 @@
                 people who have similar interests.
             </p>
 
-            <a href="#" class="edit-profile-btn">
+            <a href="{{ route('profile.setup') }}" class="complete-profile-btn">
                 Complete Your Profile
-            </a>
+                  <span>→</span>
+             </a>
         </div>
 
     </section>
