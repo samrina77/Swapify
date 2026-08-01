@@ -104,7 +104,24 @@ Route::view('/phone-login', 'phone-login')
 
     Route::post('/phone-login', function () {
     return redirect()->route('otp.verify');
-})->name('phone.sendotp');
+})->name('phone.sendOtp');
 
 Route::view('/verify-otp', 'verify-otp')
     ->name('otp.verify');
+
+Route::post('/verify-otp', function (Request $request) {
+
+    $request->validate([
+        'otp' => 'required',
+    ]);
+
+    if ($request->otp == '123456') {
+        return redirect()->route('dashboard');
+    }
+
+    return back()->withErrors([
+        'otp' => 'Invalid OTP. Please try again.',
+    ]);
+
+})->name('verify.otp.submit');
+    
