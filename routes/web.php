@@ -102,6 +102,28 @@ Route::view('/phone-login', 'phone-login')
     Route::view('/phone-signup', 'phone-signup')
     ->name('phone.signup');
 
+    Route::post('/phone-signup', function (Request $request) {
+
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'phone' => 'required|string|max:20|unique:users,phone',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
+
+    $user = User::create([
+        'name' => $validated['name'],
+        'phone' => $validated['phone'],
+        'password' => Hash::make($validated['password']),
+    ]);
+
+    Auth::login($user);
+
+    $request->session()->regenerate();
+
+    return redirect()->route('dashboard');
+
+})->name('phone.signup.store');
+
     Route::post('/phone-login', function () {
     return redirect()->route('otp.verify');
 })->name('phone.sendOtp');
