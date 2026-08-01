@@ -196,6 +196,25 @@ nav ul li{
 
 }
 
+/* Logo and Swapify text */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.brand-logo {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+ 
 </style>
 
 </head>
@@ -214,9 +233,13 @@ nav ul li{
 
 <nav>
 
-<div class="logo">
-Swapify
-</div>
+<a href="{{ url('/') }}" class="brand">
+    <img src="{{ asset('images/swapify-logo.jpeg') }}"
+     alt="Swapify Logo"
+     class="brand-logo">
+
+    <span>Swapify</span>
+</a>
 
 <ul>
 <li><a href="/">Home</a></li>

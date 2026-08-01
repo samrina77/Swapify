@@ -637,6 +637,24 @@
                 padding: 20px;
             }
         }
+
+        .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: 14px;
+    display: block;
+}
     </style>
 </head>
 
@@ -733,8 +751,11 @@
 <nav class="navbar">
 
     <a href="{{ route('home') }}" class="logo">
-        Swapify
-    </a>
+    <img src="{{ asset('images/swapify-logo.jpeg') }}"
+         alt="Swapify Logo">
+
+    <span>Swapify</span>
+</a>
 
     <div class="nav-right">
 
