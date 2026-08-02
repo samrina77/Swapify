@@ -542,12 +542,12 @@
 
     $selectedTeachSkills = old(
         'teach_skills',
-        $user->teach_skills ?? []
+        $profile?->teach_skills ?? []
     );
 
     $selectedLearnSkills = old(
         'learn_skills',
-        $user->learn_skills ?? []
+        $profile?->learn_skills ?? []
     );
 
     if (is_string($selectedTeachSkills)) {
@@ -620,13 +620,13 @@
     @endif
 
     <form
-        class="profile-form"
-        id="profileForm"
-        action="{{ route('profile.store') }}"
-        method="POST"
-        enctype="multipart/form-data"
-    >
-        @csrf
+    class="profile-form"
+    id="profileForm"
+    action="{{ route('profile.update') }}"
+    method="POST"
+    enctype="multipart/form-data"
+>
+    @csrf
 
         <section class="form-section">
 
@@ -639,26 +639,26 @@
                 <div class="profile-preview">
 
                     <span
-                        id="profileIcon"
-                        @if ($user->profile_picture)
-                            style="display: none;"
-                        @endif
-                    >
-                        👤
-                    </span>
+    id="profileIcon"
+    @if ($profile?->profile_picture)
+        style="display: none;"
+    @endif
+>
+    👤
+</span>
 
-                    <img
-                        id="previewImage"
-                        alt="Profile preview"
+<img
+    id="previewImage"
+    alt="Profile preview"
 
-                        @if ($user->profile_picture)
-                            src="{{ asset('storage/' . $user->profile_picture) }}"
-                            style="display: block;"
-                        @else
-                            src=""
-                            style="display: none;"
-                        @endif
-                    >
+    @if ($profile?->profile_picture)
+        src="{{ asset('storage/' . $profile->profile_picture) }}"
+        style="display: block;"
+    @else
+        src=""
+        style="display: none;"
+    @endif
+>
 
                 </div>
 
@@ -678,36 +678,18 @@
                         Choose Picture
                     </label>
 
-                    <input
-                        type="file"
-                        id="profile_picture"
-                        name="profile_picture"
-                        accept=".jpg,.jpeg,.png,image/jpeg,image/png"
-                    >
+                    
+                        <input
+    type="file"
+    id="profile_picture"
+    name="profile_picture"
+    accept=".jpg,.jpeg,.png,.webp"
+>
 
                 </div>
 
-            </div>
-
+         
             <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label for="name">
-                        Full Name
-                        <span class="required">*</span>
-                    </label>
-
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value="{{ old('name', $user->name) }}"
-                        placeholder="Enter your full name"
-                        required
-                    >
-
-                </div>
 
                 <div class="form-group">
 
@@ -720,8 +702,7 @@
                         type="tel"
                         id="contact"
                         name="contact"
-                        value="{{ old('contact', $user->contact) }}"
-                        placeholder="+977 98XXXXXXXX"
+                        value="{{ old('contac',$profile?->contact) }}
                         required
                     >
 
@@ -735,10 +716,9 @@
 
                     <input
                         type="email"
-                        id="email"
-                        name="email"
+                         name="email"
                         value="{{ old('email', $user->email) }}"
-                        placeholder="example@email.com"
+                        required
                     >
 
                 </div>
@@ -749,7 +729,7 @@
                         Gender
                     </label>
 
-                    <select id="gender" name="gender">
+                    <select name="gender">
 
                         <option value="">
                             Select gender
@@ -765,7 +745,7 @@
                             <option
                                 value="{{ $gender }}"
                                 @selected(
-                                    old('gender', $user->gender) === $gender
+                                   old('gender', $profile?->gender)
                                 )
                             >
                                 {{ $gender }}
@@ -784,10 +764,9 @@
                     </label>
 
                     <textarea
-                        id="bio"
+                        id="bio
                         name="bio"
-                        placeholder="Write a short description about yourself..."
-                    >{{ old('bio', $user->bio) }}</textarea>
+                       >{{ old('bio', $profile?->bio) }}</textarea>
 
                 </div>
 
@@ -833,7 +812,7 @@
                             <option
                                 value="{{ $province }}"
                                 @selected(
-                                    old('province', $user->province)
+                                    old('province', $profile?->province)
                                     === $province
                                 )
                             >
@@ -877,7 +856,7 @@
                         type="text"
                         id="municipality"
                         name="municipality"
-                        value="{{ old('municipality', $user->municipality) }}"
+                        value="{{ old('municipality', $profile?->municipality) }}"
                         placeholder="Example: Kathmandu Metropolitan City"
                         required
                     >
@@ -888,16 +867,18 @@
 
                     <label for="ward">
                         Ward Number
+                        <span class="required">*</span>
                     </label>
 
                     <input
                         type="number"
                         id="ward"
                         name="ward"
-                        value="{{ old('ward', $user->ward) }}"
+                        value="{{ old('ward', $profile?->ward) }}"
                         min="1"
                         max="50"
                         placeholder="Example: 5"
+                        required
                     >
 
                 </div>
@@ -908,112 +889,121 @@
 
         <section class="form-section">
 
-            <h2 class="section-heading">
-                Skills You Want to Teach
-            </h2>
+    <h2 class="section-heading">
+        Skills You Want to Teach
+    </h2>
 
-            <p class="skills-information">
-                Select one or more skills that you can teach
-                other Swapify members.
-            </p>
+    <p class="skills-information">
+        Select one or more skills that you can teach
+        other Swapify members.
+    </p>
 
-            @foreach ($skillGroups as $category => $skills)
+    @foreach ($skillGroups as $category => $skills)
 
-                <div class="skill-category">
+        <div class="skill-category">
 
-                    <h3>{{ $category }}</h3>
+            <h3>{{ $category }}</h3>
 
-                    <div class="skill-options">
+            <div class="skill-options">
 
-                        @foreach ($skills as $skill)
+                @foreach ($skills as $skill)
 
-                            <label class="skill-option">
+                    @php
+                        $teachSkillId =
+                            'teach-' . md5($category . '-' . $skill);
+                    @endphp
 
-                                <input
-                                    type="checkbox"
-                                    name="teach_skills[]"
-                                    value="{{ $skill }}"
-                                    @checked(
-                                        in_array(
-                                            $skill,
-                                            $selectedTeachSkills,
-                                            true
-                                        )
-                                    )
-                                >
+                    <label
+                        class="skill-option"
+                        for="{{ $teachSkillId }}"
+                    >
 
-                                <span>{{ $skill }}</span>
+                        <input
+                            type="checkbox"
+                            id="{{ $teachSkillId }}"
+                            name="skills_to_teach[]"
+                            value="{{ $skill }}"
+                            @checked(
+                                in_array(
+                                    $skill,
+                                    $selectedTeachSkills,
+                                    true
+                                )
+                            )
+                        >
 
-                            </label>
+                        <span>{{ $skill }}</span>
 
-                        @endforeach
+                    </label>
 
-                    </div>
+                @endforeach
+
+            </div>
+
+        </div>
+
+    @endforeach
+
+    <div class="custom-skill-box">
+
+        <h3>Add Your Own Teaching Skill</h3>
+
+        <p>
+            If your skill is not listed, enter it here.
+        </p>
+
+        <div class="custom-skill-input">
+
+            <input
+                type="text"
+                id="custom_teach_skill"
+                placeholder="Example: Nepali Cooking"
+            >
+
+            <button
+                type="button"
+                class="add-skill-button"
+                onclick="addCustomSkill('teach')"
+            >
+                + Add Skill
+            </button>
+
+        </div>
+
+        <div
+            class="custom-skills-list"
+            id="custom_teach_skills"
+        >
+
+            @foreach ($customTeachSkills as $skill)
+
+                <div class="custom-skill-item">
+
+                    <input
+                        type="hidden"
+                        name="skills_to_teach[]"
+                        value="{{ $skill }}"
+                    >
+
+                    <span>{{ $skill }}</span>
+
+                    <button
+                        type="button"
+                        class="remove-skill-button"
+                        title="Remove skill"
+                    >
+                        ×
+                    </button>
 
                 </div>
 
             @endforeach
 
-            <div class="custom-skill-box">
+        </div>
 
-                <h3>Add Your Own Teaching Skill</h3>
+    </div>
 
-                <p>
-                    If your skill is not listed, enter it here.
-                </p>
-
-                <div class="custom-skill-input">
-
-                    <input
-                        type="text"
-                        id="custom_teach_skill"
-                        placeholder="Example: Nepali Cooking"
-                    >
-
-                    <button
-                        type="button"
-                        class="add-skill-button"
-                        onclick="addCustomSkill('teach')"
-                    >
-                        + Add Skill
-                    </button>
-
-                </div>
-
-                <div
-                    class="custom-skills-list"
-                    id="custom_teach_skills"
-                >
-
-                    @foreach ($customTeachSkills as $skill)
-
-                        <div class="custom-skill-item">
-
-                            <input
-                                type="hidden"
-                                name="teach_skills[]"
-                                value="{{ $skill }}"
-                            >
-
-                            <span>{{ $skill }}</span>
-
-                            <button
-                                type="button"
-                                class="remove-skill-button"
-                                title="Remove skill"
-                            >
-                                ×
-                            </button>
-
-                        </div>
-
-                    @endforeach
-
-                </div>
-
-            </div>
-
-        </section>
+</section>
 
         <section class="form-section">
 
@@ -1040,7 +1030,7 @@
 
                                 <input
                                     type="checkbox"
-                                    name="learn_skills[]"
+                                    name="skills_to_learn[]"
                                     value="{{ $skill }}"
                                     @checked(
                                         in_array(
@@ -1100,7 +1090,7 @@
 
                             <input
                                 type="hidden"
-                                name="learn_skills[]"
+                                name="skills_to_learn[]"
                                 value="{{ $skill }}"
                             >
 
@@ -1130,7 +1120,7 @@
     type="button"
     class="save-button"
     id="saveButton"
-    onclick="window.location.href='{{ route('dashboard') }}'"
+
 >
     Save & Continue
 </button>
@@ -1253,7 +1243,7 @@
         document.getElementById('district');
 
     const initialDistrict =
-        @json(old('district', $user->district));
+        @json(old('district', $profile?->district));
 
     function updateDistrictOptions(
         selectedDistrict = ''
@@ -1382,8 +1372,8 @@
 
         const inputName =
             type === 'teach'
-                ? 'teach_skills[]'
-                : 'learn_skills[]';
+                ? 'skills_to_teach[]'
+                : 'skills_to_learn[]';
 
         if (skillValue === '') {
             alert('Please enter a skill name.');
@@ -1515,16 +1505,16 @@
             javascriptError.style.display = 'none';
 
             const teachingSkills =
-                document.querySelectorAll(
-                    'input[name="teach_skills[]"]:checked, ' +
-                    'input[type="hidden"][name="teach_skills[]"]'
-                );
+    document.querySelectorAll(
+        'input[name="skills_to_teach[]"]:checked, ' +
+        'input[type="hidden"][name="skills_to_teach[]"]'
+    );
 
-            const learningSkills =
-                document.querySelectorAll(
-                    'input[name="learn_skills[]"]:checked, ' +
-                    'input[type="hidden"][name="learn_skills[]"]'
-                );
+const learningSkills =
+    document.querySelectorAll(
+        'input[name="skills_to_learn[]"]:checked, ' +
+        'input[type="hidden"][name="skills_to_learn[]"]'
+    );
 
             if (teachingSkills.length === 0) {
                 event.preventDefault();

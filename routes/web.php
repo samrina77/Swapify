@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,12 +65,12 @@ Route::middleware('auth')->group(function () {
     Route::view('/dashboard', 'dashboard')
         ->name('dashboard');
 
-    Route::view('/complete-profile', 'complete-profile')
-        ->name('profile.setup');
 
-    Route::post('/complete-profile', function (Request $request) {
-        // Profile validation and saving code goes here.
-    })->name('profile.store');
+    Route::get('/complete-profile', [ProfileController::class, 'edit'])
+    ->name('profile.setup');
+
+Route::post('/complete-profile', [ProfileController::class, 'update'])
+    ->name('profile.update');
 
     Route::post('/logout', function (Request $request) {
         Auth::logout();
