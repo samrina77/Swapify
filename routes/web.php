@@ -8,11 +8,6 @@ use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
-<<<<<<< Updated upstream
-Route::middleware('auth')->group(function () {
-=======
-
->>>>>>> Stashed changes
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
@@ -20,7 +15,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
 
-});
+;
 use App\Http\Controllers\ClassScheduleController; 
 Route::get('/', function () {
     return view('welcome');
@@ -179,24 +174,11 @@ Route::get('/add-skills', function () {
     return view('add-skills');
 })->name('add.skills');
     
-<<<<<<< Updated upstream
-
-Route::get('/calendar', [ClassScheduleController::class, 'index'])
-    ->middleware('auth')
-    ->name('calendar');
-
-Route::get('/matches', [ProfileController::class, 'findMatches'])
-    ->name('matches');
-
-    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
-
-Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
-    
-Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
-    ->middleware('auth')
-    ->name('calendar.store');
-=======
 Route::get('/messages', function () {
     return view('messages');
 });
->>>>>>> Stashed changes
+Route::get('/matches', [ProfileController::class, 'findMatches'])
+    ->name('find.matches');
+
+    Route::post('/calendar/store', [ClassScheduleController::class, 'store'])
+    ->name('calendar.store');
