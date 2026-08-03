@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< Updated upstream
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -57,4 +58,26 @@ class MessageController extends Controller
 
         return redirect()->route('messages.chat', $request->receiver_id);
     }
+=======
+use Illuminate\Http\Request;
+use App\Models\Message;
+
+class MessageController extends Controller
+{
+    public function index()
+    {
+        $messages = Message::latest()->get();
+        return view('messages', compact('messages'));
+    }
+
+    public function send(Request $request)
+{
+    Message::create([
+        'sender_id' => $request->sender_id,
+        'receiver_id' => $request->receiver_id,
+        'message' => $request->message
+    ]);
+
+    return back();
+>>>>>>> Stashed changes
 }
