@@ -156,3 +156,7 @@ Route::get('/add-skills', function () {
 Route::get('/calendar', [ClassScheduleController::class, 'index'])
     ->middleware('auth')
     ->name('calendar');
+
+Route::get('/matches', [ProfileController::class, 'findMatches'])
+    ->name('matches');
+    
