@@ -151,4 +151,7 @@ Route::post('/verify-otp', function (Request $request) {
 Route::get('/add-skills', function () {
     return view('add-skills');
 })->name('add.skills');
+
+Route::get('/matches', [ProfileController::class, 'findMatches'])
+    ->name('matches');
     

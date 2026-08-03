@@ -931,9 +931,9 @@ $profilePicture = $profile?->profile_picture;
                 skills you want to learn.
             </p>
 
-            <a href="#" class="action-button">
-                Explore
-            </a>
+            <a href="{{ route('matches') }}" class="action-button">
+    Find Matches
+</a>
 
         </article>
 

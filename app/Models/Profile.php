@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,4 +25,9 @@ class Profile extends Model
         'skills_to_teach' => 'array',
         'skills_to_learn' => 'array',
     ];
-}
+       public function user()
+       {
+            return $this->belongsTo(User::class);
+
+       }
+    }

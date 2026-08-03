@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -141,4 +142,36 @@ class ProfileController extends Controller
             ->route('dashboard')
             ->with('success', 'Profile saved successfully!');
     }
+public function findMatches()
+{
+    $myProfile = auth()->user()->profile;
+
+    if (!$myProfile) {
+        return redirect()->route('profile.setup')
+            ->with('error', 'Please complete your profile first.');
+    }
+
+    $myTeach = $myProfile->skills_to_teach ?? [];
+    $myLearn = $myProfile->skills_to_learn ?? [];
+
+    $matches = Profile::with('user')
+        ->where('user_id', '!=', auth()->id())
+        ->get()
+        ->filter(function ($profile) use ($myTeach, $myLearn) {
+
+            $teachMatch = array_intersect(
+                $myLearn,
+                $profile->skills_to_teach ?? []
+            );
+
+            $learnMatch = array_intersect(
+                $myTeach,
+                $profile->skills_to_learn ?? []
+            );
+
+            return count($teachMatch) > 0 || count($learnMatch) > 0;
+        });
+
+    return view('matches', compact('matches'));
+}
 }
