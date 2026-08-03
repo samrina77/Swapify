@@ -655,7 +655,58 @@
     border-radius: 14px;
     display: block;
 }
+.calendar-section {
+    margin-top: 40px;
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(59, 51, 48, 0.12);
+    overflow-x: auto;
+}
+
+.calendar-section .section-title {
+    margin-bottom: 24px;
+    color: #455947;
+}
+
+#calendar {
+    width: 100%;
+    min-height: 620px;
+}
+
+.fc .fc-toolbar-title {
+    color: #455947;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.fc .fc-button-primary {
+    background-color: #864622;
+    border-color: #864622;
+    border-radius: 8px;
+}
+
+.fc .fc-button-primary:hover {
+    background-color: #3b3330;
+    border-color: #3b3330;
+}
+
+.fc .fc-day-today {
+    background-color: rgba(201, 221, 195, 0.45) !important;
+}
+
+.fc .fc-col-header-cell {
+    background-color: #c9ddc3;
+    padding: 10px 0;
+}
+
+.fc .fc-daygrid-day-number,
+.fc .fc-col-header-cell-cushion {
+    color: #3b3330;
+    text-decoration: none;
+}
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.21/index.global.min.js"></script>
 </head>
 
 <body>
@@ -1093,7 +1144,13 @@ $profilePicture = $profile?->profile_picture;
             </div>
 
         </article>
+<section class="calendar-section">
+    <div class="section-heading-row">
+        <h2 class="section-title">Class Calendar</h2>
+    </div>
 
+    <div id="calendar"></div>
+</section>
     </section>
 
 </main>
@@ -1101,6 +1158,21 @@ $profilePicture = $profile?->profile_picture;
 <footer>
     © {{ date('Y') }} Swapify. Learn, Share and Grow Together.
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarElement = document.getElementById('calendar');
 
+        const calendar = new FullCalendar.Calendar(calendarElement, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: ''
+            }
+        });
+
+        calendar.render();
+    });
+</script>
 </body>
 </html>
