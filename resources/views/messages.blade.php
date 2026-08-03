@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Swapify Messages</title>
+<<<<<<< Updated upstream
 
     <style>
         *{
@@ -112,10 +113,13 @@
         }
     </style>
 
+=======
+>>>>>>> Stashed changes
 </head>
 
 <body>
 
+<<<<<<< Updated upstream
 <div class="container">
 
 <div class="sidebar">
@@ -208,3 +212,11 @@ value="{{ $user->id ?? '' }}">
 
 </body>
 </html>
+=======
+<h1>Swapify Messages</h1>
+
+<p>Message page working</p>
+
+</body>
+</html>
+>>>>>>> Stashed changes
