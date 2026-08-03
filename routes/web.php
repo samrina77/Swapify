@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\ClassScheduleController; 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -152,3 +152,7 @@ Route::get('/add-skills', function () {
     return view('add-skills');
 })->name('add.skills');
     
+
+Route::get('/calendar', [ClassScheduleController::class, 'index'])
+    ->middleware('auth')
+    ->name('calendar');
