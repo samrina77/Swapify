@@ -28,4 +28,32 @@ class ClassScheduleController extends Controller
 
         return view('calendar', compact('sessions', 'users'));
     }
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'teacher_id' => 'required|exists:users,id',
+        'skill_name' => 'required|string|max:100',
+        'starts_at' => 'required|date|after:now',
+        'duration_minutes' => 'required|integer',
+        'mode' => 'required|in:online,in_person',
+        'notes' => 'nullable|string|max:500',
+    ]);
+
+    ClassSchedule::create([
+        'requester_id' => Auth::id(),
+        'teacher_id' => $validated['teacher_id'],
+        'skill_name' => $validated['skill_name'],
+        'starts_at' => $validated['starts_at'],
+        'duration_minutes' => $validated['duration_minutes'],
+        'mode' => $validated['mode'],
+        'status' => 'pending',
+        'notes' => $validated['notes'] ?? null,
+    ]);
+
+    return redirect()
+        ->route('dashboard')
+        ->with('success', 'Class schedule request added successfully.');
+
+        
+}
 }

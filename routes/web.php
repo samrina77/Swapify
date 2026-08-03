@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MessageController;
+Route::middleware('auth')->group(function () {
+
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+
+    Route::get('/messages/{user}', [MessageController::class, 'chat'])->name('messages.chat');
+
+    Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+
+});
 use App\Http\Controllers\ClassScheduleController; 
 Route::get('/', function () {
     return view('welcome');
@@ -62,9 +72,22 @@ Route::post('/login', function (Request $request) {
 })->name('login.store');
 
 Route::middleware('auth')->group(function () {
-    Route::view('/dashboard', 'dashboard')
-        ->name('dashboard');
+   Route::get('/dashboard', function () {
+    $userId = Auth::id();
 
+    $users = User::where('id', '!=', $userId)
+        ->orderBy('name')
+        ->get(['id', 'name']);
+
+    $sessions = \App\Models\ClassSchedule::where(function ($query) use ($userId) {
+        $query->where('requester_id', $userId)
+            ->orWhere('teacher_id', $userId);
+    })
+        ->orderBy('starts_at')
+        ->get();
+
+    return view('dashboard', compact('users', 'sessions'));
+})->name('dashboard');
 
     Route::get('/complete-profile', [ProfileController::class, 'edit'])
     ->name('profile.setup');
@@ -159,4 +182,11 @@ Route::get('/calendar', [ClassScheduleController::class, 'index'])
 
 Route::get('/matches', [ProfileController::class, 'findMatches'])
     ->name('matches');
+
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+
+Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
     
+Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
+    ->middleware('auth')
+    ->name('calendar.store');
