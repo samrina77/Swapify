@@ -8,8 +8,8 @@ use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ClassScheduleController; 
 
-Route::middleware('auth')->group(function () {
 
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
@@ -18,8 +18,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
 
-});
-use App\Http\Controllers\ClassScheduleController; 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -183,7 +181,8 @@ Route::get('/calendar', [ClassScheduleController::class, 'index'])
     ->name('calendar');
 
 Route::get('/matches', [ProfileController::class, 'findMatches'])
-    ->name('matches');
+-> middleware('auth')
+    ->name('find.matches');
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
@@ -192,3 +191,10 @@ Route::post('/messages/send', [MessageController::class, 'send'])->name('message
 Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.store');
+<<<<<<< HEAD
+=======
+Route::get('/messages', function () {
+    return view('messages');
+});
+
+>>>>>>> 6378cab11d2a9b3cc0ebe042ac325dbefc294ca0
