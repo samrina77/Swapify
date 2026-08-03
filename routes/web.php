@@ -8,11 +8,9 @@ use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
-<<<<<<< Updated upstream
-Route::middleware('auth')->group(function () {
-=======
 
->>>>>>> Stashed changes
+Route::middleware('auth')->group(function () {
+
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
@@ -179,7 +177,6 @@ Route::get('/add-skills', function () {
     return view('add-skills');
 })->name('add.skills');
     
-<<<<<<< Updated upstream
 
 Route::get('/calendar', [ClassScheduleController::class, 'index'])
     ->middleware('auth')
@@ -195,8 +192,6 @@ Route::post('/messages/send', [MessageController::class, 'send'])->name('message
 Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.store');
-=======
 Route::get('/messages', function () {
     return view('messages');
 });
->>>>>>> Stashed changes
