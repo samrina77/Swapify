@@ -705,6 +705,117 @@
     color: #3b3330;
     text-decoration: none;
 }
+
+#scheduleModal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#scheduleModal[hidden] {
+    display: none;
+}
+
+.schedule-modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
+}
+
+.schedule-modal-box h2 {
+    margin: 0 0 22px;
+    color: #455947;
+}
+
+#closeScheduleModal {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: #864622;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.schedule-modal-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.schedule-modal-box label {
+    margin-top: 8px;
+    font-weight: 700;
+    color: #455947;
+}
+
+.schedule-modal-box input,
+.schedule-modal-box select,
+.schedule-modal-box textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #cfc7bd;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+.schedule-modal-box textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.schedule-modal-box form button[type="submit"] {
+    margin-top: 14px;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    background: #864622;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#scheduleButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 12px;
+    background: #864622;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(134, 70, 34, 0.25);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#scheduleButton:hover {
+    background: #3b3330;
+    transform: translateY(-2px);
+}
+
+#scheduleButton:active {
+    transform: translateY(0);
+}
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.21/index.global.min.js"></script>
 </head>
@@ -1147,32 +1258,130 @@ $profilePicture = $profile?->profile_picture;
 <section class="calendar-section">
     <div class="section-heading-row">
         <h2 class="section-title">Class Calendar</h2>
+        
+<button type="button" id="scheduleButton">
+    + Schedule Class
+</button>
     </div>
 
     <div id="calendar"></div>
 </section>
     </section>
+<div id="scheduleModal" hidden>
+    <div class="schedule-modal-box">
+        <button type="button" id="closeScheduleModal">×</button>
 
+        <h2>Schedule a Class</h2>
+
+        <form method="POST" action="{{ route('calendar.store') }}">
+            @csrf
+
+            <label for="teacher_id">Teacher</label>
+            <select name="teacher_id" id="teacher_id" required>
+                <option value="">Choose a teacher</option>
+
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}">
+                        {{ $user->name }}
+                    </option>
+                @endforeach
+            </select>
+
+            <label for="skill_name">Class or Skill</label>
+            <input
+                type="text"
+                name="skill_name"
+                id="skill_name"
+                placeholder="Example: Graphic Design"
+                required
+            >
+
+            <label for="starts_at">Date and Time</label>
+            <input
+                type="datetime-local"
+                name="starts_at"
+                id="starts_at"
+                required
+            >
+
+            <label for="duration_minutes">Duration</label>
+            <select name="duration_minutes" id="duration_minutes" required>
+                <option value="30">30 minutes</option>
+                <option value="60" selected>1 hour</option>
+                <option value="90">1 hour 30 minutes</option>
+                <option value="120">2 hours</option>
+            </select>
+
+            <label for="mode">Class Type</label>
+            <select name="mode" id="mode" required>
+                <option value="online">Online</option>
+                <option value="in_person">In Person</option>
+            </select>
+
+            <label for="notes">Notes</label>
+            <textarea
+                name="notes"
+                id="notes"
+                placeholder="What do you want to learn?"
+            ></textarea>
+
+            <button type="submit">
+                Send Schedule Request
+            </button>
+        </form>
+    </div>
+</div>
 </main>
 
 <footer>
     © {{ date('Y') }} Swapify. Learn, Share and Grow Together.
 </footer>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const calendarElement = document.getElementById('calendar');
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarElement = document.getElementById('calendar');
+    const scheduleModal = document.getElementById('scheduleModal');
+    const scheduleButton = document.getElementById('scheduleButton');
+    const closeButton = document.getElementById('closeScheduleModal');
+    const startsAtInput = document.getElementById('starts_at');
 
-        const calendar = new FullCalendar.Calendar(calendarElement, {
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: ''
+    if (!calendarElement) {
+        return;
+    }
+
+    const calendar = new FullCalendar.Calendar(calendarElement, {
+        initialView: 'dayGridMonth',
+
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+
+        dateClick: function (info) {
+            if (startsAtInput) {
+                startsAtInput.value = info.dateStr + 'T10:00';
             }
-        });
 
-        calendar.render();
+            if (scheduleModal) {
+                scheduleModal.removeAttribute('hidden');
+            }
+        }
     });
+
+    calendar.render();
+
+    if (scheduleButton && scheduleModal) {
+        scheduleButton.addEventListener('click', function () {
+            scheduleModal.removeAttribute('hidden');
+        });
+    }
+
+    if (closeButton && scheduleModal) {
+        closeButton.addEventListener('click', function () {
+            scheduleModal.setAttribute('hidden', '');
+        });
+    }
+});
 </script>
 </body>
 </html>
