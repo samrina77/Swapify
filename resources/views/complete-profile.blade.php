@@ -541,13 +541,13 @@
     ];
 
     $selectedTeachSkills = old(
-        'teach_skills',
-        $profile?->teach_skills ?? []
+        'skills_to_teach',
+        $profile?->skills_to_teach ?? []
     );
 
     $selectedLearnSkills = old(
-        'learn_skills',
-        $profile?->learn_skills ?? []
+        'skills_to_learn',
+        $profile?->skills_to_learn ?? []
     );
 
     if (is_string($selectedTeachSkills)) {
