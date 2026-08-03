@@ -687,32 +687,21 @@
     | Teaching skills
     |--------------------------------------------------------------------------
     */
+    $profile = \App\Models\Profile::where('user_id', $user->id)->first();
 
-    $teachSkills = $user->teach_skills ?? [];
+$teachSkills = $profile?->skills_to_teach ?? [];
 
-    if (is_string($teachSkills)) {
-        $teachSkills = json_decode($teachSkills, true) ?: [];
-    }
+if (is_string($teachSkills)) {
+    $teachSkills = json_decode($teachSkills, true) ?: [];
+}
 
-    if (!is_array($teachSkills)) {
-        $teachSkills = [];
-    }
+$learnSkills = $profile?->skills_to_learn ?? [];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Learning skills
-    |--------------------------------------------------------------------------
-    */
+if (is_string($learnSkills)) {
+    $learnSkills = json_decode($learnSkills, true) ?: [];
+}
 
-    $learnSkills = $user->learn_skills ?? [];
-
-    if (is_string($learnSkills)) {
-        $learnSkills = json_decode($learnSkills, true) ?: [];
-    }
-
-    if (!is_array($learnSkills)) {
-        $learnSkills = [];
-    }
+$profilePicture = $profile?->profile_picture;
 
     /*
     |--------------------------------------------------------------------------
@@ -729,8 +718,8 @@
         $user->province ?? null,
         $user->district ?? null,
         $user->municipality ?? null,
-        count($teachSkills) > 0 ? $teachSkills : null,
-        count($learnSkills) > 0 ? $learnSkills : null,
+        count($teachSkills) ? $teachSkills : null,
+        count($learnSkills) ? $learnSkills : null,
     ];
 
     $completedInformation = collect($profileInformation)
@@ -878,31 +867,31 @@
 
     <section class="stats-grid">
 
-        <div class="stat-card">
+        <a href="{{ route('profile.setup') }}" class="stat-card">
 
-            <div class="stat-icon">
-                🧑‍🏫
-            </div>
+    <div class="stat-icon">
+        🧑‍🏫
+    </div>
 
-            <div class="stat-details">
-                <h3>{{ count($teachSkills) }}</h3>
-                <p>Skills Offered</p>
-            </div>
+    <div class="stat-details">
+        <h3>{{ count($teachSkills) }}</h3>
+        <p>Skills Offered</p>
+    </div>
 
-        </div>
+</a>
 
-        <div class="stat-card">
+<a href="{{ route('profile.setup') }}" class="stat-card">
 
-            <div class="stat-icon">
-                📚
-            </div>
+    <div class="stat-icon">
+        📚
+    </div>
 
-            <div class="stat-details">
-                <h3>{{ count($learnSkills) }}</h3>
-                <p>Skills Learning</p>
-            </div>
+    <div class="stat-details">
+        <h3>{{ count($learnSkills) }}</h3>
+        <p>Skills Learning</p>
+    </div>
 
-        </div>
+</a>
 
         <div class="stat-card">
 

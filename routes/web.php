@@ -147,4 +147,8 @@ Route::post('/verify-otp', function (Request $request) {
     ]);
 
 })->name('verify.otp.submit');
+
+Route::get('/add-skills', function () {
+    return view('add-skills');
+})->name('add.skills');
     

@@ -687,6 +687,22 @@
 >
 
                 </div>
+                <div class="form-group">
+
+    <label for="name">
+        Full Name
+        <span class="required">*</span>
+    </label>
+
+    <input
+        type="text"
+        id="name"
+        name="name"
+        value="{{ old('name', $user->name) }}"
+        required
+    >
+
+</div>
 
          
             <div class="form-grid">
@@ -702,8 +718,10 @@
                         type="tel"
                         id="contact"
                         name="contact"
-                        value="{{ old('contac',$profile?->contact) }}
+                        value="{{ old('contact',$profile?->contact) }}"
+                        placeholder="+977 98XXXXXXXX"
                         required
+                        
                     >
 
                 </div>
@@ -745,7 +763,7 @@
                             <option
                                 value="{{ $gender }}"
                                 @selected(
-                                   old('gender', $profile?->gender)
+                                   old('gender', $profile?->gender)=== $gender
                                 )
                             >
                                 {{ $gender }}
@@ -764,9 +782,10 @@
                     </label>
 
                     <textarea
-                        id="bio
+                        id="bio"
                         name="bio"
-                       >{{ old('bio', $profile?->bio) }}</textarea>
+                        placeholder="Tell us about yourself..."
+                    >{{ old('bio', $profile?->bio) }}</textarea>
 
                 </div>
 
@@ -1117,7 +1136,7 @@
         <div class="form-actions">
 
             <button
-    type="button"
+    type="submit"
     class="save-button"
     id="saveButton"
 
