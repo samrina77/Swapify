@@ -192,6 +192,3 @@ Route::post('/messages/send', [MessageController::class, 'send'])->name('message
 Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.store');
-Route::get('/messages', function () {
-    return view('messages');
-});

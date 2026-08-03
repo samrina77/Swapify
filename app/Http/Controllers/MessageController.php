@@ -9,72 +9,52 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    // Show all users and recent messages
     public function index()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+       $users = User::all();
 
-        $messages = Message::where('sender_id', Auth::id())
-            ->orWhere('receiver_id', Auth::id())
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $messages = Message::where(function ($query) {
+            $query->where('sender_id', Auth::id())
+                  ->orWhere('receiver_id', Auth::id());
+        })
+        ->orderBy('created_at', 'asc')
+        ->get();
 
         return view('messages', compact('users', 'messages'));
     }
 
-    // Open chat with selected user
     public function chat(User $user)
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = User::all();
+
 
         $messages = Message::where(function ($query) use ($user) {
-                $query->where('sender_id', Auth::id())
-                      ->where('receiver_id', $user->id);
-            })
-            ->orWhere(function ($query) use ($user) {
-                $query->where('sender_id', $user->id)
-                      ->where('receiver_id', Auth::id());
-            })
-            ->orderBy('created_at', 'asc')
-            ->get();
+            $query->where('sender_id', Auth::id())
+                  ->where('receiver_id', $user->id);
+        })
+        ->orWhere(function ($query) use ($user) {
+            $query->where('sender_id', $user->id)
+                  ->where('receiver_id', Auth::id());
+        })
+        ->orderBy('created_at', 'asc')
+        ->get();
 
         return view('messages', compact('users', 'messages', 'user'));
     }
 
-    // Send message
     public function send(Request $request)
     {
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
-            'message' => 'required'
+            'message' => 'required|string',
         ]);
 
         Message::create([
-            'sender_id'   => Auth::id(),
+            'sender_id' => Auth::id(),
             'receiver_id' => $request->receiver_id,
-            'message'     => $request->message,
+            'message' => $request->message,
         ]);
 
         return redirect()->route('messages.chat', $request->receiver_id);
     }
-use Illuminate\Http\Request;
-use App\Models\Message;
-
-class MessageController extends Controller
-{
-    public function index()
-    {
-        $messages = Message::latest()->get();
-        return view('messages', compact('messages'));
-    }
-
-    public function send(Request $request)
-{
-    Message::create([
-        'sender_id' => $request->sender_id,
-        'receiver_id' => $request->receiver_id,
-        'message' => $request->message
-    ]);
-
-    return back();
 }
