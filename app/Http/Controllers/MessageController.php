@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< Updated upstream
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -58,7 +57,6 @@ class MessageController extends Controller
 
         return redirect()->route('messages.chat', $request->receiver_id);
     }
-=======
 use Illuminate\Http\Request;
 use App\Models\Message;
 
@@ -79,5 +77,4 @@ class MessageController extends Controller
     ]);
 
     return back();
->>>>>>> Stashed changes
 }

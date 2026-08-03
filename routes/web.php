@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ClassScheduleController; 
+
+
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
@@ -15,8 +18,6 @@ use App\Http\Controllers\MessageController;
 
     Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
 
-;
-use App\Http\Controllers\ClassScheduleController; 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -174,11 +175,23 @@ Route::get('/add-skills', function () {
     return view('add-skills');
 })->name('add.skills');
     
+
+Route::get('/calendar', [ClassScheduleController::class, 'index'])
+    ->middleware('auth')
+    ->name('calendar');
+
+Route::get('/matches', [ProfileController::class, 'findMatches'])
+-> middleware('auth')
+    ->name('find.matches');
+
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+
+Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+    
+Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
+    ->middleware('auth')
+    ->name('calendar.store');
 Route::get('/messages', function () {
     return view('messages');
 });
-Route::get('/matches', [ProfileController::class, 'findMatches'])
-    ->name('find.matches');
 
-    Route::post('/calendar/store', [ClassScheduleController::class, 'store'])
-    ->name('calendar.store');
