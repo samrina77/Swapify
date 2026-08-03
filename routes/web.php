@@ -7,7 +7,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MessageController;
+Route::middleware('auth')->group(function () {
 
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+
+    Route::get('/messages/{user}', [MessageController::class, 'chat'])->name('messages.chat');
+
+    Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
+
+});
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -154,4 +163,7 @@ Route::get('/add-skills', function () {
 
 Route::get('/matches', [ProfileController::class, 'findMatches'])
     ->name('matches');
-    
+
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
+
+Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
