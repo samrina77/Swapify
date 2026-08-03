@@ -171,7 +171,6 @@ public function findMatches()
 
             return count($teachMatch) > 0 || count($learnMatch) > 0;
         });
-        dd ($myTeach, $myLearn, $matches);
 
     return view('matches', compact('matches'));
 }
