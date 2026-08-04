@@ -184,17 +184,11 @@ Route::get('/matches', [ProfileController::class, 'findMatches'])
 -> middleware('auth')
     ->name('find.matches');
 
-    Route::get('/messages', [MessageController::class, 'index'])->name('messages');
-
-Route::post('/messages/send', [MessageController::class, 'send'])->name('messages.send');
     
 Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.store');
-<<<<<<< HEAD
-=======
-Route::get('/messages', function () {
-    return view('messages');
-});
 
->>>>>>> 6378cab11d2a9b3cc0ebe042ac325dbefc294ca0
+
+
+

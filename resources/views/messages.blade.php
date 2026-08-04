@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Swapify Messages</title>
-<<<<<<< HEAD
+
 
     <style>
         *{
@@ -114,13 +114,11 @@
     </style>
 
 
-=======
->>>>>>> 6378cab11d2a9b3cc0ebe042ac325dbefc294ca0
+
 </head>
 
 <body>
 
-<<<<<<< HEAD
 <div class="container">
 
 <div class="sidebar">
@@ -214,11 +212,3 @@ value="{{ $user->id ?? '' }}">
 </body>
 </html>
 
-=======
-<h1>Swapify Messages</h1>
-
-<p>Message page working</p>
-
-</body>
-</html>
->>>>>>> 6378cab11d2a9b3cc0ebe042ac325dbefc294ca0
