@@ -9,19 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    public function index()
-    {
-       $users = User::all();
+   public function index()
+{
+    $users = User::where('id', '!=', Auth::id())->get();
 
-        $messages = Message::where(function ($query) {
-            $query->where('sender_id', Auth::id())
-                  ->orWhere('receiver_id', Auth::id());
-        })
-        ->orderBy('created_at', 'asc')
-        ->get();
+    $messages = collect();
 
-        return view('messages', compact('users', 'messages'));
-    }
+    return view('messages', compact('users', 'messages'));
+}
 
     public function chat(User $user)
     {
