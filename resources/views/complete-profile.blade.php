@@ -595,7 +595,7 @@
     </a>
 
     <a href="{{ route('dashboard') }}" class="back-link">
-        ← Dashboard
+        Dashboard
     </a>
 
 </nav>
