@@ -1334,7 +1334,7 @@ $profilePicture = $profile?->profile_picture;
 </main>
 
 <footer>
-    © {{ date('Y') }} Swapify. Learn, Share and Grow Together.
+    © {{ date('Y') }} Where Every Skill Finds a Learner. 
 </footer>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
