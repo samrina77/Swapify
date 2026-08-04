@@ -75,6 +75,30 @@ body{
     color:var(--woodland);
     margin-bottom:10px;
 }
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin:20px 0;
+}
+
+.info-box{
+    background:#F8F2E9;
+    border:1px solid #C9DDC3;
+    border-radius:12px;
+    padding:14px;
+}
+
+.info-box strong{
+    display:block;
+    color:#455947;
+    margin-bottom:6px;
+    font-size:14px;
+}
+
+.bio-box{
+    grid-column:1 / -1;
+}
 
 .badge{
     display:inline-block;
@@ -121,7 +145,7 @@ Swapify
 </a>
 
 <a href="{{ route('dashboard') }}" class="back">
-← Dashboard
+ Dashboard
 </a>
 
 </div>
@@ -133,10 +157,93 @@ Swapify
 @forelse($matches as $match)
 
 <div class="card">
+<div style="text-align:center; margin-bottom:20px;">
 
+@if($match->profile_picture)
+
+<img src="{{ Storage::url($match->profile_picture) }}"
+     style="
+     width:120px;
+     height:120px;
+     border-radius:50%;
+     object-fit:cover;
+     border:4px solid #C9DDC3;">
+
+@else
+
+<div style="
+width:120px;
+height:120px;
+margin:auto;
+border-radius:50%;
+background:#C9DDC3;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+font-weight:bold;
+color:#455947;">
+
+{{ strtoupper(substr($match->user->name,0,1)) }}
+
+</div>
+
+@endif
+
+</div>
 <h2>{{ $match->user->name }}</h2>
+@php
 
-<p><strong>Email:</strong> {{ $match->user->email }}</p>
+$rating = round(
+$match->user->reviewsReceived->avg('rating'),
+1
+);
+
+$totalReviews =
+$match->user->reviewsReceived->count();
+
+@endphp
+
+<p>
+
+⭐
+
+{{ $rating ?: '0.0' }}
+
+({{ $totalReviews }} Reviews)
+
+</p>
+<div class="info-grid">
+
+    <div class="info-box">
+        <strong>📧 Email</strong>
+        {{ $match->user->email }}
+    </div>
+
+    <div class="info-box">
+        <strong>📱 Contact</strong>
+        {{ $match->contact }}
+    </div>
+
+    <div class="info-box">
+        <strong>👤 Gender</strong>
+        {{ $match->gender ?? 'Not Provided' }}
+    </div>
+
+    <div class="info-box">
+        <strong>📍 Address</strong>
+        {{ $match->ward }},
+        {{ $match->municipality }},
+        {{ $match->district }},
+        {{ $match->province }}
+    </div>
+
+    <div class="info-box bio-box">
+        <strong>📝 Bio</strong>
+        {{ $match->bio ?? 'No bio available.' }}
+    </div>
+
+</div>
 
 <br>
 
@@ -160,10 +267,15 @@ Swapify
 
 <br>
 
+<a href="{{ route('messages.chat',$match->user->id) }}">
+
 <button>
-Send Skill Request
+
+💬 Send Message
+
 </button>
 
+</a>
 </div>
 
 @empty

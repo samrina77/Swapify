@@ -46,10 +46,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 
-public function profile()
+public function reviewsReceived()
 {
-    return $this->hasOne(Profile::class);
-}
+    return $this->hasMany(Review::class,'reviewed_user_id');
 }
 
+public function reviewsGiven()
+{
+    return $this->hasMany(Review::class,'reviewer_id');
+}
+}

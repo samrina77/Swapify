@@ -896,7 +896,7 @@ $profilePicture = $profile?->profile_picture;
 
     $skillCredits = $user->skill_credits ?? 100;
 
-    $profilePicture = $user->profile_picture ?? null;
+    
 @endphp
 
 <nav class="navbar">
@@ -915,7 +915,7 @@ $profilePicture = $profile?->profile_picture;
 
             <a href="#">Find Skills</a>
 
-            <a href="#">Messages</a>
+           <a href="{{ route('messages') }}">Messages</a>
 
            <a
     href="{{ route('notifications.index') }}"
@@ -1098,7 +1098,7 @@ $profilePicture = $profile?->profile_picture;
                 skills you want to learn.
             </p>
 
-            <a href="{{ route('matches') }}" class="action-button">
+            <a href="{{ route('find.matches') }}" class="action-button">
     Find Matches
 </a>
 
@@ -1139,9 +1139,9 @@ $profilePicture = $profile?->profile_picture;
                 skill exchange sessions.
             </p>
 
-            <a href="#" class="action-button">
-                Open Messages
-            </a>
+            <a href="{{ route('messages') }}" class="action-button">
+    Open Messages
+</a>
 
         </article>
 
@@ -1382,7 +1382,7 @@ $profilePicture = $profile?->profile_picture;
 </main>
 
 <footer>
-    © {{ date('Y') }} Swapify. Learn, Share and Grow Together.
+    © {{ date('Y') }} Where Every Skill Finds a Learner. 
 </footer>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
