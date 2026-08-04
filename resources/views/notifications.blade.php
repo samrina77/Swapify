@@ -233,6 +233,32 @@
                 grid-column: auto;
             }
         }
+        .delete-form {
+    display: inline-block;
+    margin: 0;
+}
+
+.delete-btn {
+    background: #864622;
+    color: #ffffff;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #6d3519;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(134, 70, 34, 0.25);
+}
+
+.delete-btn:active {
+    transform: translateY(0);
+}
     </style>
 </head>
 
@@ -301,9 +327,11 @@
 
         @forelse($notifications as $notification)
 
-            @php
-                $data = json_decode($notification->data, true);
-            @endphp
+           @php
+    $data = is_array($notification->data)
+        ? $notification->data
+        : json_decode($notification->data, true);
+@endphp
 
             <div class="notification-card
                 {{ is_null($notification->read_at) ? 'unread' : '' }}">
@@ -399,24 +427,18 @@
                         </form>
                     @endif
 
-                    <form
-                        action="{{ route(
-                            'notifications.delete',
-                            $notification->id
-                        ) }}"
-                        method="POST"
-                    >
-                        @csrf
-                        @method('DELETE')
+                  <form action="{{ route('notifications.delete', $notification->id) }}"
+      method="POST"
+      class="delete-form"
+      onsubmit="return confirm('Are you sure you want to delete this notification?')">
 
-                        <button
-                            type="submit"
-                            class="action-button delete-button"
-                        >
-                            Delete
-                        </button>
-                    </form>
+    @csrf
+    @method('DELETE')
 
+    <button type="submit" class="delete-btn">
+        Delete
+    </button>
+</form>
                 </div>
 
             </div>
