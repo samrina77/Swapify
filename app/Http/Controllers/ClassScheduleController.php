@@ -6,7 +6,8 @@ use App\Models\ClassSchedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ClassScheduleController extends Controller
 {
@@ -28,32 +29,93 @@ class ClassScheduleController extends Controller
 
         return view('calendar', compact('sessions', 'users'));
     }
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'teacher_id' => 'required|exists:users,id',
-        'skill_name' => 'required|string|max:100',
-        'starts_at' => 'required|date|after:now',
-        'duration_minutes' => 'required|integer',
-        'mode' => 'required|in:online,in_person',
-        'notes' => 'nullable|string|max:500',
-    ]);
 
-    ClassSchedule::create([
-        'requester_id' => Auth::id(),
-        'teacher_id' => $validated['teacher_id'],
-        'skill_name' => $validated['skill_name'],
-        'starts_at' => $validated['starts_at'],
-        'duration_minutes' => $validated['duration_minutes'],
-        'mode' => $validated['mode'],
-        'status' => 'pending',
-        'notes' => $validated['notes'] ?? null,
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'teacher_id' => 'required|integer|exists:users,id',
+            'skill_name' => 'required|string|max:100',
+            'starts_at' => 'required|date|after:now',
+            'duration_minutes' => 'required|integer|min:15|max:480',
+            'mode' => 'required|in:online,in_person',
+            'notes' => 'nullable|string|max:500',
+        ]);
 
-    return redirect()
-        ->route('dashboard')
-        ->with('success', 'Class schedule request added successfully.');
+        if ((int) $validated['teacher_id'] === (int) Auth::id()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'teacher_id' => 'You cannot send a schedule request to yourself.',
+                ]);
+        }
 
-        
-}
+        $teacher = User::findOrFail($validated['teacher_id']);
+
+        $schedule = ClassSchedule::create([
+            'requester_id' => Auth::id(),
+            'teacher_id' => $teacher->id,
+            'skill_name' => $validated['skill_name'],
+            'starts_at' => $validated['starts_at'],
+            'duration_minutes' => $validated['duration_minutes'],
+            'mode' => $validated['mode'],
+            'status' => 'pending',
+            'notes' => $validated['notes'] ?? null,
+        ]);
+
+        $classType = $validated['mode'] === 'online'
+            ? 'Online'
+            : 'In Person';
+
+        $duration = $validated['duration_minutes'] === 60
+            ? '1 hour'
+            : $validated['duration_minutes'] . ' minutes';
+
+        DB::table('notifications')->insert([
+            'id' => Str::uuid()->toString(),
+
+            'type' => 'class_schedule_request',
+
+            'notifiable_type' => 'App\\Models\\User',
+
+            // Notification matched teacher लाई मात्र जान्छ
+            'notifiable_id' => $teacher->id,
+
+            'data' => json_encode([
+                'schedule_id' => $schedule->id,
+
+                'student_id' => Auth::id(),
+
+                'student_name' => Auth::user()->name,
+
+                'teacher_id' => $teacher->id,
+
+                'teacher_name' => $teacher->name,
+
+                'message' => Auth::user()->name
+                    . ' sent you a schedule request for '
+                    . $validated['skill_name'],
+
+                'skill' => $validated['skill_name'],
+
+                'date_time' => $validated['starts_at'],
+
+                'duration' => $duration,
+
+                'class_type' => $classType,
+
+                'notes' => $validated['notes'] ?? null,
+
+                'status' => 'pending',
+            ]),
+
+            'read_at' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return back()->with(
+            'success',
+            'Schedule request sent to ' . $teacher->name . ' successfully.'
+        );
+    }
 }

@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ClassScheduleController; 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -176,3 +178,48 @@ Route::get('/matches', [ProfileController::class, 'findMatches'])
 Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.store');
+
+   Route::get('/notifications', function () {
+
+    $notifications = DB::table('notifications')
+        ->where('notifiable_id', Auth::id())
+        ->orderByDesc('created_at')
+        ->get();
+
+    return view('notifications', compact('notifications'));
+
+})->middleware('auth')->name('notifications.index');
+
+
+Route::post('/notifications/{id}/read', function ($id) {
+
+    DB::table('notifications')
+        ->where('id', $id)
+        ->where('notifiable_id', Auth::id())
+        ->update([
+            'read_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+    return back();
+
+})->middleware('auth')->name('notifications.read');
+
+
+Route::delete('/notifications/{id}', function ($id) {
+
+    DB::table('notifications')
+        ->where('id', $id)
+        ->where('notifiable_id', Auth::id())
+        ->delete();
+
+    return back()->with('success', 'Notification deleted successfully.');
+
+})->middleware('auth')->name('notifications.delete');
+
+
+
+Route::post(
+    '/class-schedules',
+    [ClassScheduleController::class, 'store']
+)->middleware('auth')->name('class-schedules.store');

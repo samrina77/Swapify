@@ -917,7 +917,12 @@ $profilePicture = $profile?->profile_picture;
 
             <a href="#">Messages</a>
 
-            <a href="#">Notifications</a>
+           <a
+    href="{{ route('notifications.index') }}"
+    class="{{ request()->routeIs('notifications.index') ? 'active' : '' }}"
+>
+    Notifications
+</a>
         </div>
 
         <div class="profile-area">
@@ -1273,62 +1278,105 @@ $profilePicture = $profile?->profile_picture;
 
         <h2>Schedule a Class</h2>
 
-        <form method="POST" action="{{ route('calendar.store') }}">
-            @csrf
+      <form method="POST" action="{{ route('class-schedules.store') }}">
+    @csrf
 
-            <label for="teacher_id">Teacher</label>
-            <select name="teacher_id" id="teacher_id" required>
-                <option value="">Choose a teacher</option>
+    <label for="teacher_id">Matched User</label>
 
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">
-                        {{ $user->name }}
-                    </option>
-                @endforeach
-            </select>
+    <select name="teacher_id" id="teacher_id" required>
+        <option value="">Choose a matched user</option>
 
-            <label for="skill_name">Class or Skill</label>
-            <input
-                type="text"
-                name="skill_name"
-                id="skill_name"
-                placeholder="Example: Graphic Design"
-                required
+        @foreach($users as $user)
+            <option
+                value="{{ $user->id }}"
+                {{ old('teacher_id') == $user->id ? 'selected' : '' }}
             >
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
 
-            <label for="starts_at">Date and Time</label>
-            <input
-                type="datetime-local"
-                name="starts_at"
-                id="starts_at"
-                required
-            >
 
-            <label for="duration_minutes">Duration</label>
-            <select name="duration_minutes" id="duration_minutes" required>
-                <option value="30">30 minutes</option>
-                <option value="60" selected>1 hour</option>
-                <option value="90">1 hour 30 minutes</option>
-                <option value="120">2 hours</option>
-            </select>
+    <label for="skill_name">Class or Skill</label>
 
-            <label for="mode">Class Type</label>
-            <select name="mode" id="mode" required>
-                <option value="online">Online</option>
-                <option value="in_person">In Person</option>
-            </select>
+    <input
+        type="text"
+        name="skill_name"
+        id="skill_name"
+        value="{{ old('skill_name') }}"
+        placeholder="Example: Graphic Design"
+        required
+    >
 
-            <label for="notes">Notes</label>
-            <textarea
-                name="notes"
-                id="notes"
-                placeholder="What do you want to learn?"
-            ></textarea>
 
-            <button type="submit">
-                Send Schedule Request
-            </button>
-        </form>
+    <label for="starts_at">Date and Time</label>
+
+    <input
+        type="datetime-local"
+        name="starts_at"
+        id="starts_at"
+        value="{{ old('starts_at') }}"
+        required
+    >
+
+
+    <label for="duration_minutes">Duration</label>
+
+    <select
+        name="duration_minutes"
+        id="duration_minutes"
+        required
+    >
+        <option value="30" {{ old('duration_minutes') == 30 ? 'selected' : '' }}>
+            30 minutes
+        </option>
+
+        <option value="60" {{ old('duration_minutes', 60) == 60 ? 'selected' : '' }}>
+            1 hour
+        </option>
+
+        <option value="90" {{ old('duration_minutes') == 90 ? 'selected' : '' }}>
+            1 hour 30 minutes
+        </option>
+
+        <option value="120" {{ old('duration_minutes') == 120 ? 'selected' : '' }}>
+            2 hours
+        </option>
+    </select>
+
+
+    <label for="mode">Class Type</label>
+
+    <select name="mode" id="mode" required>
+        <option
+            value="online"
+            {{ old('mode', 'online') === 'online' ? 'selected' : '' }}
+        >
+            Online
+        </option>
+
+        <option
+            value="in_person"
+            {{ old('mode') === 'in_person' ? 'selected' : '' }}
+        >
+            In Person
+        </option>
+    </select>
+
+
+    <label for="notes">Notes</label>
+
+    <textarea
+        name="notes"
+        id="notes"
+        placeholder="What do you want to learn?"
+    >{{ old('notes') }}</textarea>
+
+
+    <button type="submit" class="schedule-request-btn">
+        Send Schedule Request
+    </button>
+</form>
     </div>
 </div>
 </main>
