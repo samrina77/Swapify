@@ -154,7 +154,10 @@ public function findMatches()
     $myTeach = $myProfile->skills_to_teach ?? [];
     $myLearn = $myProfile->skills_to_learn ?? [];
 
-    $matches = Profile::with('user')
+    $matches = Profile::with([
+'user',
+'user.reviewsReceived'
+])
         ->where('user_id', '!=', auth()->id())
         ->get()
         ->filter(function ($profile) use ($myTeach, $myLearn) {
