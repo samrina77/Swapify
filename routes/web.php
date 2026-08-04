@@ -10,7 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ClassScheduleController; 
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\NotificationController;
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
@@ -202,4 +202,17 @@ Route::get('/notifications', function () {
 })->middleware('auth')->name('notifications.index');
 
 
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/notifications', [NotificationController::class, 'index'])
+        ->name('notifications.index');
+
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])
+        ->name('notifications.read');
+
+        Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])
+    ->name('notifications.delete');
+
+});
 

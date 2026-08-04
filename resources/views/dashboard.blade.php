@@ -1442,7 +1442,7 @@ $profilePicture = $profile?->profile_picture;
 
         <h2>Schedule a Class</h2>
 
-    <form method="POST" action="{{ route('calendar.store') }}"></form>
+    <form method="POST" action="{{ route('calendar.store') }}">
     @csrf
 
     <label for="teacher_id">Matched User</label>
