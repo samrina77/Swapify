@@ -896,7 +896,7 @@ $profilePicture = $profile?->profile_picture;
 
     $skillCredits = $user->skill_credits ?? 100;
 
-    $profilePicture = $user->profile_picture ?? null;
+    
 @endphp
 
 <nav class="navbar">
