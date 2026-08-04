@@ -192,6 +192,10 @@ color:#455947;">
 
 </div>
 <h2>{{ $match->user->name }}</h2>
+
+<a href="{{ route('reviews', $match->user->id) }}">
+    Reviews ⭐
+</a>
 @php
 
 $rating = round(

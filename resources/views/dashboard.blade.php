@@ -1434,6 +1434,98 @@ $profilePicture = $profile?->profile_picture;
     </div>
 
     <div id="calendar"></div>
+    @foreach($sessions as $session)
+
+@if($session->status == 'completed')
+
+<div style="margin-top:15px;">
+
+<a href="{{ route('reviews', $session->teacher_id == auth()->id() ? $session->requester_id : $session->teacher_id) }}">
+
+<button style="
+background:#864622;
+color:white;
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">
+⭐ Give Review
+</button>
+
+</a>
+
+</div>
+
+@endif
+
+@endforeach
+    @if($sessions->count())
+
+<h3 style="margin-top:30px;color:#455947;">
+    My Scheduled Classes
+</h3>
+
+@foreach($sessions as $session)
+
+<div style="
+background:white;
+padding:18px;
+margin-top:15px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+">
+
+<b>{{ $session->skill_name }}</b>
+
+<br><br>
+
+Teacher:
+{{ $session->teacher->name }}
+
+<br>
+
+Student:
+{{ $session->requester->name }}
+
+<br>
+
+Status:
+<b>{{ ucfirst($session->status) }}</b>
+
+<br><br>
+
+@if($session->status != 'completed')
+
+<form
+action="{{ route('calendar.complete',$session->id) }}"
+method="POST">
+
+@csrf
+
+<button
+style="background:#455947;">
+✔ Mark as Completed
+</button>
+
+</form>
+
+@else
+
+<a href="{{ route('reviews',$session->teacher_id) }}">
+<button style="background:#864622;">
+⭐ Give Review
+</button>
+</a>
+
+@endif
+
+</div>
+
+@endforeach
+
+@endif
+
 </section>
     </section>
 <div id="scheduleModal" hidden>

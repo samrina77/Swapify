@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ClassScheduleController; 
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\DB;
 
 
@@ -189,6 +190,9 @@ Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.store');
 
+    Route::post('/calendar/{schedule}/complete', [ClassScheduleController::class, 'complete'])
+    ->middleware('auth')
+    ->name('calendar.complete');
 
 Route::get('/notifications', function () {
 
@@ -201,5 +205,13 @@ Route::get('/notifications', function () {
 
 })->middleware('auth')->name('notifications.index');
 
+
+Route::get('/reviews/{user}', [ReviewController::class, 'index'])
+    ->middleware('auth')
+    ->name('reviews');
+
+Route::post('/reviews/{user}', [ReviewController::class, 'store'])
+    ->middleware('auth')
+    ->name('reviews.store');
 
 
