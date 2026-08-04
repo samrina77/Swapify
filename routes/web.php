@@ -9,7 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ClassScheduleController; 
-
+use Illuminate\Support\Facades\DB;
 
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
@@ -189,6 +189,17 @@ Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.store');
 
+
+Route::get('/notifications', function () {
+
+    $notifications = DB::table('notifications')
+        ->where('notifiable_id', Auth::id())
+        ->orderByDesc('created_at')
+        ->get();
+
+    return view('notifications', compact('notifications'));
+
+})->middleware('auth')->name('notifications.index');
 
 
 

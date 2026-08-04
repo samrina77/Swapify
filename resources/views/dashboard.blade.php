@@ -716,79 +716,243 @@
     justify-content: center;
     padding: 20px;
 }
+/* Schedule modal background */
+
+#scheduleModal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(59, 51, 48, 0.68);
+    backdrop-filter: blur(4px);
+}
 
 #scheduleModal[hidden] {
     display: none;
 }
 
+
+/* White schedule form box */
+
 .schedule-modal-box {
     position: relative;
+
     width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
+    max-width: 620px;
+    max-height: 92vh;
     overflow-y: auto;
-    padding: 28px;
+
+    padding: 35px 38px;
+
     background: #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
+    border: 1px solid rgba(69, 89, 71, 0.18);
+    border-radius: 22px;
+
+    box-shadow: 0 22px 65px rgba(59, 51, 48, 0.32);
 }
 
+
+/* Modal heading */
+
 .schedule-modal-box h2 {
-    margin: 0 0 22px;
+    margin: 0 0 28px;
+
     color: #455947;
+    font-size: 30px;
+    font-weight: 800;
 }
+
+
+/* Close button */
 
 #closeScheduleModal {
     position: absolute;
-    top: 12px;
-    right: 14px;
-    width: 36px;
-    height: 36px;
+    top: 17px;
+    right: 18px;
+
+    width: 40px;
+    height: 40px;
+
     border: none;
     border-radius: 50%;
+
     background: #864622;
-    color: white;
-    font-size: 22px;
+    color: #ffffff;
+
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
+    transition: 0.2s ease;
 }
+
+#closeScheduleModal:hover {
+    background: #3B3330;
+    transform: rotate(90deg);
+}
+
+
+/* Form layout */
 
 .schedule-modal-box form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
 }
 
+
+/* Labels */
+
 .schedule-modal-box label {
-    margin-top: 8px;
-    font-weight: 700;
-    color: #455947;
+    margin-top: 17px;
+    margin-bottom: 8px;
+
+    color: #3B3330;
+    font-size: 16px;
+    font-weight: 800;
 }
+
+.schedule-modal-box label:first-of-type {
+    margin-top: 0;
+}
+
+
+/* Inputs, dropdowns and textarea */
 
 .schedule-modal-box input,
 .schedule-modal-box select,
 .schedule-modal-box textarea {
     width: 100%;
-    padding: 11px 12px;
-    border: 1px solid #cfc7bd;
-    border-radius: 9px;
-    font-size: 15px;
+
+    padding: 14px 16px;
+
+    background: #F8F2E9;
+    color: #3B3330;
+
+    border: 1px solid rgba(69, 89, 71, 0.25);
+    border-radius: 12px;
+
+    font-size: 16px;
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
+.schedule-modal-box input:focus,
+.schedule-modal-box select:focus,
+.schedule-modal-box textarea:focus {
+    background: #ffffff;
+    border-color: #864622;
+    box-shadow: 0 0 0 4px rgba(134, 70, 34, 0.12);
+}
+
+.schedule-modal-box input::placeholder,
+.schedule-modal-box textarea::placeholder {
+    color: #998F87;
+}
+
+
+/* Dropdown arrow */
+
+.schedule-modal-box select {
+    cursor: pointer;
+}
+
+
+/* Notes box */
+
 .schedule-modal-box textarea {
-    min-height: 90px;
+    min-height: 115px;
     resize: vertical;
 }
 
-.schedule-modal-box form button[type="submit"] {
-    margin-top: 14px;
-    padding: 13px;
+
+/* Send request button */
+
+.schedule-modal-box .schedule-request-btn {
+    width: 100%;
+
+    margin-top: 27px;
+    padding: 15px 20px;
+
     border: none;
-    border-radius: 10px;
-    background: #864622;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #864622,
+        #C78B53
+    );
+
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 800;
+
     cursor: pointer;
+
+    box-shadow: 0 9px 22px rgba(134, 70, 34, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.schedule-modal-box .schedule-request-btn:hover {
+    background: #455947;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(69, 89, 71, 0.28);
+}
+
+.schedule-modal-box .schedule-request-btn:active {
+    transform: translateY(0);
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    #scheduleModal {
+        padding: 14px;
+    }
+
+    .schedule-modal-box {
+        padding: 29px 20px 24px;
+        border-radius: 18px;
+    }
+
+    .schedule-modal-box h2 {
+        padding-right: 42px;
+        font-size: 25px;
+    }
+
+    #closeScheduleModal {
+        top: 13px;
+        right: 13px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .schedule-modal-box input,
+    .schedule-modal-box select,
+    .schedule-modal-box textarea {
+        padding: 13px 14px;
+        font-size: 15px;
+    }
 }
 
 #scheduleButton {
@@ -1278,7 +1442,7 @@ $profilePicture = $profile?->profile_picture;
 
         <h2>Schedule a Class</h2>
 
-      <form method="POST" action="{{ route('class-schedules.store') }}">
+    <form method="POST" action="{{ route('calendar.store') }}"></form>
     @csrf
 
     <label for="teacher_id">Matched User</label>
@@ -1286,14 +1450,14 @@ $profilePicture = $profile?->profile_picture;
     <select name="teacher_id" id="teacher_id" required>
         <option value="">Choose a matched user</option>
 
-        @foreach($users as $user)
-            <option
-                value="{{ $user->id }}"
-                {{ old('teacher_id') == $user->id ? 'selected' : '' }}
-            >
-                {{ $user->name }}
-            </option>
-        @endforeach
+      @foreach($users as $matchedUser)
+    <option
+        value="{{ $matchedUser->id }}"
+        {{ old('teacher_id') == $matchedUser->id ? 'selected' : '' }}
+    >
+        {{ $matchedUser->name }}
+    </option>
+@endforeach
     </select>
 
 
@@ -1312,12 +1476,13 @@ $profilePicture = $profile?->profile_picture;
     <label for="starts_at">Date and Time</label>
 
     <input
-        type="datetime-local"
-        name="starts_at"
-        id="starts_at"
-        value="{{ old('starts_at') }}"
-        required
-    >
+    type="datetime-local"
+    name="starts_at"
+    id="starts_at"
+    value="{{ old('starts_at') }}"
+    min="{{ now()->addMinute()->format('Y-m-d\TH:i') }}"
+    required
+>
 
 
     <label for="duration_minutes">Duration</label>
