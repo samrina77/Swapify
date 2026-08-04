@@ -915,7 +915,7 @@ $profilePicture = $profile?->profile_picture;
 
             <a href="#">Find Skills</a>
 
-            <a href="#">Messages</a>
+           <a href="{{ route('messages') }}">Messages</a>
 
             <a href="#">Notifications</a>
         </div>
@@ -1134,9 +1134,9 @@ $profilePicture = $profile?->profile_picture;
                 skill exchange sessions.
             </p>
 
-            <a href="#" class="action-button">
-                Open Messages
-            </a>
+            <a href="{{ route('messages') }}" class="action-button">
+    Open Messages
+</a>
 
         </article>
 
