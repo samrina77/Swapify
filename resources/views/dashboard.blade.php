@@ -979,7 +979,9 @@
 
 #scheduleButton:active {
     transform: translateY(0);
-    .class-card{
+}
+
+.class-card{
     background:#fff;
     border-radius:18px;
     padding:22px;
@@ -1037,6 +1039,39 @@
 .review-btn:hover{
     background:#455947;
 }
+
+.class-info{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin:20px 0;
+}
+
+.info-box{
+    background:#F8F2E9;
+    border:1px solid rgba(69,89,71,.15);
+    border-radius:14px;
+    padding:14px 16px;
+}
+
+.info-title{
+    display:block;
+    font-size:13px;
+    color:#777;
+    margin-bottom:6px;
+    font-weight:600;
+}
+
+.info-value{
+    color:#455947;
+    font-size:16px;
+    font-weight:700;
+}
+
+@media(max-width:700px){
+    .class-info{
+        grid-template-columns:1fr;
+    }
 }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.21/index.global.min.js"></script>
@@ -1490,78 +1525,74 @@ $profilePicture = $profile?->profile_picture;
     + Schedule Class
 </button>
     </div>
-
     <div id="calendar"></div>
-    @foreach($sessions as $session)
 
-@if($session->status == 'completed')
+    
 
-<div style="margin-top:15px;">
-
-<a href="{{ route('reviews', $session->teacher_id == auth()->id() ? $session->requester_id : $session->teacher_id) }}">
-
-<button style="
-background:#864622;
-color:white;
-padding:10px 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-">
-⭐ Give Review
-</button>
-
-</a>
-
-</div>
-
-@endif
-
-@endforeach
-    @if($sessions->count())
-
-<h3 style="margin-top:30px;color:#455947;">
+    <h2 class="section-title" style="margin-top:35px;">
     My Scheduled Classes
-</h3>
+</h2>
+
+@foreach($sessions as $session)
 
 <div class="class-card">
 
 <h3>{{ $session->skill_name }}</h3>
 
-<p><strong>👨‍🏫 Teacher:</strong> {{ $session->teacher->name }}</p>
+<div class="class-info">
 
-<p><strong>🎓 Student:</strong> {{ $session->requester->name }}</p>
+    <div class="info-box">
+        <span class="info-title">👨‍🏫 Teacher</span>
+        <div class="info-value">{{ $session->teacher->name }}</div>
+    </div>
 
-<p><strong>📅 Date:</strong>
-{{ \Carbon\Carbon::parse($session->starts_at)->format('d M Y h:i A') }}
-</p>
+    <div class="info-box">
+        <span class="info-title">🎓 Student</span>
+        <div class="info-value">{{ $session->requester->name }}</div>
+    </div>
 
-<p>
-<strong>Status:</strong>
+    <div class="info-box">
+        <span class="info-title">📅 Date</span>
+        <div class="info-value">
+            {{ \Carbon\Carbon::parse($session->starts_at)->format('d M Y h:i A') }}
+        </div>
+    </div>
 
-@if($session->status=='completed')
-<span class="status completed">
-✅ Completed
-</span>
-@else
-<span class="status pending">
-⏳ Pending
-</span>
-@endif
-</p>
+    <div class="info-box">
+        <span class="info-title">📌 Status</span>
 
-@if($session->status=='completed')
-
-<a href="{{ route('reviews',$session->teacher_id == auth()->id() ? $session->requester_id : $session->teacher_id) }}"
-class="review-btn">
-⭐ Give Review
-</a>
-
-@endif
+        @if($session->status=='completed')
+            <span class="status completed">✅ Completed</span>
+        @else
+            <span class="status pending">⏳ Pending</span>
+        @endif
+    </div>
 
 </div>
 
+@if($session->status=='completed')
+
+    <a href="{{ route('reviews.create', $session->teacher_id == auth()->id() ? $session->requester_id : $session->teacher_id) }}"
+class="review-btn">
+⭐ Give Review
+</a>
+@else
+
+    <form action="{{ route('calendar.complete',$session->id) }}" method="POST">
+        @csrf
+        <button type="submit" class="review-btn">
+            ✅ Mark as Completed
+        </button>
+    </form>
+
 @endif
+</p>
+
+</div>
+
+@endforeach
+
+
 
 </section>
     </section>
@@ -1588,59 +1619,7 @@ class="review-btn">
     </option>
 @endforeach
     </select>
-    <h2 style="margin-top:40px;">My Scheduled Classes</h2>
-
-@forelse($sessions as $session)
-
-<div style="
-background:white;
-padding:20px;
-border-radius:15px;
-margin-top:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-">
-
-<p><strong>Skill:</strong> {{ $session->skill_name }}</p>
-
-<p><strong>Date:</strong> {{ \Carbon\Carbon::parse($session->starts_at)->format('d M Y h:i A') }}</p>
-
-<p><strong>Status:</strong> {{ ucfirst($session->status) }}</p>
-
-@if($session->status!='completed')
-
-<form action="{{ route('calendar.complete',$session->id) }}" method="POST">
-    @csrf
-
-    <button
-    style="
-    margin-top:10px;
-    background:green;
-    color:white;
-    border:none;
-    padding:10px 18px;
-    border-radius:8px;
-    cursor:pointer;
-    ">
-    ✅ Mark as Completed
-    </button>
-
-</form>
-
-@else
-
-<p style="color:green;font-weight:bold;">
-✅ Completed
-</p>
-
-@endif
-
-</div>
-
-@empty
-
-<p>No scheduled classes.</p>
-
-@endforelse
+    
 
 
     <label for="skill_name">Class or Skill</label>
