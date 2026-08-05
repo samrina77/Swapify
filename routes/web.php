@@ -11,7 +11,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ClassScheduleController; 
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\NotificationController;
+
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
@@ -205,6 +205,10 @@ Route::get('/notifications', function () {
 
 })->middleware('auth')->name('notifications.index');
 
+Route::get('/reviews/{user}/create', function (App\Models\User $user) {
+    return view('review', compact('user'));
+})->middleware('auth')->name('reviews.create');
+
 
 Route::get('/reviews/{user}', [ReviewController::class, 'index'])
     ->middleware('auth')
@@ -214,17 +218,4 @@ Route::post('/reviews/{user}', [ReviewController::class, 'store'])
     ->middleware('auth')
     ->name('reviews.store');
 
-
-Route::middleware('auth')->group(function () {
-
-    Route::get('/notifications', [NotificationController::class, 'index'])
-        ->name('notifications.index');
-
-    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])
-        ->name('notifications.read');
-
-        Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])
-    ->name('notifications.delete');
-
-});
 
