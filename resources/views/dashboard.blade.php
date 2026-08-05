@@ -1262,7 +1262,7 @@ $profilePicture = $profile?->profile_picture;
                     Complete Your Profile
                 @endif
 
-                <span>→</span>
+                <span></span>
             </a>
 
         </div>
