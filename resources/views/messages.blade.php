@@ -5,112 +5,193 @@
 
 
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
+       *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
 
-        body{
-            background:#f5f3ef;
-        }
+body{
+    background:#f4f7fc;
+}
 
-        .container{
-            display:flex;
-            height:100vh;
-        }
+.chat-container{
+    display:flex;
+    height:100vh;
+}
 
-        .sidebar{
-            width:30%;
-            background:#5D4037;
-            color:white;
-            overflow-y:auto;
-        }
+/* Sidebar */
 
-        .sidebar h2{
-            padding:20px;
-            border-bottom:1px solid rgba(255,255,255,.2);
-        }
+.sidebar{
+    width:300px;
+    background:linear-gradient(180deg,#6C63FF,#4F46E5);
+    color:white;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+}
 
-        .user{
-            padding:15px 20px;
-            border-bottom:1px solid rgba(255,255,255,.1);
-            cursor:pointer;
-        }
+.sidebar h2{
+    font-size:28px;
+    margin-bottom:5px;
+}
 
-        .user:hover{
-            background:#6D4C41;
-        }
+.sidebar p{
+    color:#ddd;
+    margin-bottom:30px;
+}
 
-        .chat{
-            width:70%;
-            display:flex;
-            flex-direction:column;
-            background:white;
-        }
+.user{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:rgba(255,255,255,.15);
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:12px;
+    cursor:pointer;
+    transition:.3s;
+}
 
-        .chat-header{
-            padding:20px;
-            background:#8D6E63;
-            color:white;
-            font-size:22px;
-        }
+.user:hover{
+    background:white;
+    color:#333;
+}
 
-        .messages{
-            flex:1;
-            padding:20px;
-            overflow-y:auto;
-            background:#f7f7f7;
-        }
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:white;
+    color:#6C63FF;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
 
-        .my-message{
-            background:#8D6E63;
-            color:white;
-            padding:10px 15px;
-            border-radius:12px;
-            width:fit-content;
-            margin-left:auto;
-            margin-bottom:10px;
-            max-width:70%;
-        }
+/* Chat */
 
-        .other-message{
-            background:#ddd;
-            padding:10px 15px;
-            border-radius:12px;
-            width:fit-content;
-            margin-bottom:10px;
-            max-width:70%;
-        }
+.chat-box{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    background:white;
+}
 
-        .send-box{
-            padding:15px;
-            border-top:1px solid #ddd;
-        }
+.chat-header{
+    padding:20px;
+    border-bottom:1px solid #eee;
+    font-size:24px;
+    font-weight:600;
+    color:#444;
+}
+.back-arrow{
+    text-decoration:none;
+    color:#6C63FF;
+    font-size:28px;
+    font-weight:bold;
+    margin-right:15px;
+}
 
-        textarea{
-            width:100%;
-            height:80px;
-            padding:10px;
-            resize:none;
-            border-radius:10px;
-        }
+.back-arrow:hover{
+    color:#4F46E5;
+}
 
-        button{
-            margin-top:10px;
-            background:#5D4037;
-            color:white;
-            border:none;
-            padding:12px 25px;
-            border-radius:8px;
-            cursor:pointer;
-        }
+.messages{
+    flex:1;
+    overflow-y:auto;
+    padding:30px;
+    background:#fafbff;
+}
 
-        a{
-            text-decoration:none;
-            color:white;
-        }
+/* Chat Bubble */
+
+.message{
+    width:fit-content;
+    max-width:70%;
+    padding:10px 16px;
+    border-radius:18px;
+    margin-bottom:15px;
+    font-size:15px;
+    word-wrap:break-word;
+}
+
+
+.sent{
+    margin-left:auto;
+    background:#6C63FF;
+    color:white;
+    border-bottom-right-radius:5px;
+}
+
+
+.received{
+    background:#ececff;
+    color:#333;
+    border-bottom-left-radius:5px;
+}
+
+
+
+/* Input */
+
+.chat-input{
+    display:flex;
+    padding:18px;
+    border-top:1px solid #eee;
+    background:white;
+}
+
+.chat-input textarea{
+    flex:1;
+    height:55px;
+    border:1px solid #ddd;
+    border-radius:30px;
+    padding:15px;
+    resize:none;
+    outline:none;
+    font-size:15px;
+}
+
+.chat-input button{
+    margin-left:15px;
+    background:#6C63FF;
+    color:white;
+    border:none;
+    padding:0 30px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:16px;
+    transition:.3s;
+}
+
+.chat-input button:hover{
+    background:#4F46E5;
+}
+.dashboard-back{
+    padding:15px;
+    text-align:center;
+    background:#fff;
+    border-top:1px solid #eee;
+}
+
+.dashboard-back a{
+    display:inline-block;
+    text-decoration:none;
+    background:#6C63FF;
+    color:white;
+    padding:10px 22px;
+    border-radius:25px;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.dashboard-back a:hover{
+    background:#4F46E5;
+}
     </style>
 
 
@@ -119,39 +200,52 @@
 
 <body>
 
-<div class="container">
+<div class="chat-container">
 
-<div class="sidebar">
+    <div class="sidebar">
 
-<h2>Swapify Chat</h2>
+        <h2>Swapify Chat</h2>
+       
 
-@foreach($users as $u)
+        @foreach($users as $u)
 
-<a href="{{ route('messages.chat',$u->id) }}">
+<a href="{{ route('messages.chat', ['user' => $u->id]) }}" style="text-decoration:none;color:white;">
 
-<div class="user">
+    <div class="user">
 
-{{ $u->name }}
+        <div class="avatar">
+            {{ strtoupper(substr($u->name,0,1)) }}
+        </div>
 
-</div>
+        <div>
+            <strong>{{ $u->name }}</strong><br>
+            <small>🟢 Online</small>
+        </div>
+
+    </div>
 
 </a>
 
 @endforeach
+    </div>
 
-</div>
+    <div class="chat-box">
 
-<div class="chat">
+        
 
-<div class="chat-header">
+        <div class="chat-header">
 
-@if(isset($user))
+@if(isset($selectedUser))
 
-{{ $user->name }}
+<a href="{{ route('messages.index') }}" class="back-arrow">
+    ←
+</a>
+
+<span>Chat with {{ $selectedUser->name }}</span>
 
 @else
 
-Select User
+Welcome to Swapify Chat
 
 @endif
 
@@ -159,53 +253,84 @@ Select User
 
 <div class="messages">
 
+
+@if(isset($selectedUser))
+
+
 @foreach($messages as $message)
 
-@if($message->sender_id==Auth::id())
+@if($message->sender_id == auth()->id())
 
-<div class="my-message">
-
-{{ $message->message }}
-
+<div class="message sent">
+    {{ $message->message }}
 </div>
 
 @else
 
-<div class="other-message">
-
-{{ $message->message }}
-
+<div class="message received">
+    {{ $message->message }}
 </div>
 
 @endif
 
+
 @endforeach
+
+
+@else
+
+
+<div id="welcome" style="text-align:center;margin-top:120px;">
+
+<h2>
+Welcome to Swapify Chat
+</h2>
+
+<p style="color:gray">
+Select a user from the sidebar to start chatting.
+</p>
 
 </div>
 
-<div class="send-box">
 
-<form action="{{ route('messages.send') }}" method="POST">
+@endif
+
+
+</div>
+
+        <form class="chat-input" method="POST" action="{{ route('messages.send') }}">
 
 @csrf
 
-<input type="hidden"
-name="receiver_id"
-value="{{ $user->id ?? '' }}">
-<textarea
-    name="message"
-    placeholder="Type your message..."
-    required></textarea>
+
+<textarea 
+name="message"
+placeholder="Type your message..."
+></textarea>
+
+
+@if(isset($selectedUser))
+
+<input type="hidden" 
+name="receiver_id" 
+value="{{ $selectedUser->id }}">
+
+@endif
+
 
 <button type="submit">
-    Send Message
+Send
 </button>
+
 
 </form>
 
+        </form>
+        <div class="dashboard-back">
+    <a href="{{ route('dashboard') }}"> Back to Dashboard</a>
 </div>
 
-</div>
+    </div>
 
 </div>
 

@@ -237,3 +237,16 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/profile/{id}', [ProfileController::class, 'viewProfile'])
     ->middleware('auth')
     ->name('profile.view');
+
+    Route::get('/messages/{user}', [MessageController::class, 'chat'])
+    ->middleware('auth')
+    ->name('messages.chat');
+
+
+
+Route::post('/messages/send',
+[MessageController::class,'send'])
+->name('messages.send');
+
+Route::get('/messages', [MessageController::class, 'index'])
+    ->name('messages.index');

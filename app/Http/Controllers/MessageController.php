@@ -18,38 +18,56 @@ class MessageController extends Controller
     return view('messages', compact('users', 'messages'));
 }
 
-    public function chat(User $user)
-    {
-        $users = User::all();
+    public function chat($id)
+{
+
+$users = User::where('id','!=',auth()->id())->get();
 
 
-        $messages = Message::where(function ($query) use ($user) {
-            $query->where('sender_id', Auth::id())
-                  ->where('receiver_id', $user->id);
-        })
-        ->orWhere(function ($query) use ($user) {
-            $query->where('sender_id', $user->id)
-                  ->where('receiver_id', Auth::id());
-        })
-        ->orderBy('created_at', 'asc')
-        ->get();
+$selectedUser = User::findOrFail($id);
 
-        return view('messages', compact('users', 'messages', 'user'));
-    }
+
+$messages = Message::where(function($query) use($id){
+
+$query->where('sender_id',auth()->id())
+      ->where('receiver_id',$id);
+
+})
+->orWhere(function($query) use($id){
+
+$query->where('sender_id',$id)
+      ->where('receiver_id',auth()->id());
+
+})
+->get();
+
+
+
+return view('messages',compact(
+'users',
+'selectedUser',
+'messages'
+));
+
+
+}
 
     public function send(Request $request)
-    {
-        $request->validate([
-            'receiver_id' => 'required|exists:users,id',
-            'message' => 'required|string',
-        ]);
+{
 
-        Message::create([
-            'sender_id' => Auth::id(),
-            'receiver_id' => $request->receiver_id,
-            'message' => $request->message,
-        ]);
+Message::create([
 
-        return redirect()->route('messages.chat', $request->receiver_id);
-    }
+'sender_id'=>auth()->id(),
+
+'receiver_id'=>$request->receiver_id,
+
+'message'=>$request->message
+
+]);
+
+
+return back();
+
+}
+
 }
