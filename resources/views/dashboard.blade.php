@@ -979,6 +979,64 @@
 
 #scheduleButton:active {
     transform: translateY(0);
+    .class-card{
+    background:#fff;
+    border-radius:18px;
+    padding:22px;
+    margin-top:20px;
+    border:1px solid #e6e6e6;
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+    transition:.25s;
+}
+
+.class-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 30px rgba(0,0,0,.12);
+}
+
+.class-card h3{
+    color:#455947;
+    margin-bottom:18px;
+    font-size:23px;
+}
+
+.class-card p{
+    margin:10px 0;
+    font-size:16px;
+    color:#444;
+}
+
+.status{
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.completed{
+    background:#d8f5dc;
+    color:#1b7d34;
+}
+
+.pending{
+    background:#fff3cd;
+    color:#9c6b00;
+}
+
+.review-btn{
+    display:inline-block;
+    margin-top:18px;
+    background:#864622;
+    color:white;
+    padding:12px 24px;
+    border-radius:10px;
+    font-weight:bold;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.review-btn:hover{
+    background:#455947;
+}
 }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.21/index.global.min.js"></script>
@@ -1081,8 +1139,8 @@ $profilePicture = $profile?->profile_picture;
 
            <a href="{{ route('messages') }}">Messages</a>
 
-           <a
-    href="{{ route('notifications.index') }}"
+           
+    <a href="{{ route('notifications.index') }}"
     class="{{ request()->routeIs('notifications.index') ? 'active' : '' }}"
 >
     Notifications
@@ -1466,63 +1524,42 @@ cursor:pointer;
     My Scheduled Classes
 </h3>
 
-@foreach($sessions as $session)
+<div class="class-card">
 
-<div style="
-background:white;
-padding:18px;
-margin-top:15px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-">
+<h3>{{ $session->skill_name }}</h3>
 
-<b>{{ $session->skill_name }}</b>
+<p><strong>👨‍🏫 Teacher:</strong> {{ $session->teacher->name }}</p>
 
-<br><br>
+<p><strong>🎓 Student:</strong> {{ $session->requester->name }}</p>
 
-Teacher:
-{{ $session->teacher->name }}
+<p><strong>📅 Date:</strong>
+{{ \Carbon\Carbon::parse($session->starts_at)->format('d M Y h:i A') }}
+</p>
 
-<br>
+<p>
+<strong>Status:</strong>
 
-Student:
-{{ $session->requester->name }}
-
-<br>
-
-Status:
-<b>{{ ucfirst($session->status) }}</b>
-
-<br><br>
-
-@if($session->status != 'completed')
-
-<form
-action="{{ route('calendar.complete',$session->id) }}"
-method="POST">
-
-@csrf
-
-<button
-style="background:#455947;">
-✔ Mark as Completed
-</button>
-
-</form>
-
+@if($session->status=='completed')
+<span class="status completed">
+✅ Completed
+</span>
 @else
+<span class="status pending">
+⏳ Pending
+</span>
+@endif
+</p>
 
-<a href="{{ route('reviews',$session->teacher_id) }}">
-<button style="background:#864622;">
+@if($session->status=='completed')
+
+<a href="{{ route('reviews',$session->teacher_id == auth()->id() ? $session->requester_id : $session->teacher_id) }}"
+class="review-btn">
 ⭐ Give Review
-</button>
 </a>
 
 @endif
 
 </div>
-
-@endforeach
 
 @endif
 
@@ -1551,6 +1588,59 @@ style="background:#455947;">
     </option>
 @endforeach
     </select>
+    <h2 style="margin-top:40px;">My Scheduled Classes</h2>
+
+@forelse($sessions as $session)
+
+<div style="
+background:white;
+padding:20px;
+border-radius:15px;
+margin-top:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+">
+
+<p><strong>Skill:</strong> {{ $session->skill_name }}</p>
+
+<p><strong>Date:</strong> {{ \Carbon\Carbon::parse($session->starts_at)->format('d M Y h:i A') }}</p>
+
+<p><strong>Status:</strong> {{ ucfirst($session->status) }}</p>
+
+@if($session->status!='completed')
+
+<form action="{{ route('calendar.complete',$session->id) }}" method="POST">
+    @csrf
+
+    <button
+    style="
+    margin-top:10px;
+    background:green;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    ">
+    ✅ Mark as Completed
+    </button>
+
+</form>
+
+@else
+
+<p style="color:green;font-weight:bold;">
+✅ Completed
+</p>
+
+@endif
+
+</div>
+
+@empty
+
+<p>No scheduled classes.</p>
+
+@endforelse
 
 
     <label for="skill_name">Class or Skill</label>

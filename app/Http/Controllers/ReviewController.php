@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    // Review list dekhaucha
     public function index(User $user)
     {
-        $reviews = $user->reviewsReceived()
+        $review = $user->reviewsReceived()
             ->with('reviewer')
             ->latest()
             ->get();
@@ -20,28 +21,30 @@ class ReviewController extends Controller
             1
         );
 
-        return view('reviews', compact(
+        return view('review', compact(
             'user',
-            'reviews',
+            'review',
             'averageRating'
         ));
     }
-public function store(Request $request, User $user)
-{
-    $request->validate([
-        'rating' => 'required|integer|min:1|max:5',
-        'review' => 'nullable|string|max:1000',
-    ]);
 
-    Review::create([
-        'user_id' => $user->id,
-        'reviewer_id' => auth()->id(),
-        'rating' => $request->rating,
-        'review' => $request->review,
-    ]);
+    
+    public function store(Request $request, User $user)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'review' => 'nullable|string|max:1000',
+        ]);
 
-    return redirect()
-        ->route('reviews', $user->id)
-        ->with('success', 'Review submitted successfully.');
-}
+        Review::create([
+            'reviewer_id' => auth()->id(),
+            'reviewed_user_id' => $user->id,
+            'rating' => $request->rating,
+            'review' => $request->review,
+        ]);
+
+        return redirect()
+            ->route('reviews', $user->id)
+            ->with('success', 'Review submitted successfully.');
+    }
 }

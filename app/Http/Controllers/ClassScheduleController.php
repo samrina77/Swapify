@@ -47,6 +47,7 @@ class ClassScheduleController extends Controller
                 ->withErrors([
                     'teacher_id' => 'You cannot send a schedule request to yourself.',
                 ]);
+                
         }
 
         $teacher = User::findOrFail($validated['teacher_id']);
@@ -118,4 +119,22 @@ class ClassScheduleController extends Controller
             'Schedule request sent to ' . $teacher->name . ' successfully.'
         );
     }
+public function complete(ClassSchedule $schedule)
+{
+    if (
+        auth()->id() != $schedule->requester_id &&
+        auth()->id() != $schedule->teacher_id
+    ) {
+        abort(403);
+    }
+
+    $schedule->update([
+        'status' => 'completed',
+    ]);
+
+    return back()->with(
+        'success',
+        'Class marked as completed.'
+    );
+}
 }

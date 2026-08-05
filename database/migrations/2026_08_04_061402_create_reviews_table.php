@@ -1,36 +1,27 @@
- <?php
+<?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Http\Controllers;
 
-return new class extends Migration
+use App\Models\User;
+
+class ReviewController extends Controller
 {
-    public function up(): void
+    public function index(User $user)
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        $reviews = $user->reviewsReceived()
+            ->with('reviewer')
+            ->latest()
+            ->get();
 
-            $table->id();
+        $averageRating = round(
+            $user->reviewsReceived()->avg('rating'),
+            1
+        );
 
-            $table->foreignId('reviewer_id')
-                ->constrained('users')
-                ->cascadeOnDelete();
-
-            $table->foreignId('reviewed_user_id')
-                ->constrained('users')
-                ->cascadeOnDelete();
-
-            $table->unsignedTinyInteger('rating');
-
-            $table->text('review')->nullable();
-
-            $table->timestamps();
-
-        });
+        return view('reviews', compact(
+            'user',
+            'reviews',
+            'averageRating'
+        ));
     }
-
-    public function down(): void
-    {
-        Schema::dropIfExists('reviews');
-    }
-};
+}
