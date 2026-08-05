@@ -1077,7 +1077,7 @@ $profilePicture = $profile?->profile_picture;
         <div class="nav-links">
             <a href="{{ route('home') }}">Home</a>
 
-            <a href="#">Find Skills</a>
+      <a href="{{ route('find.skills') }}">Find Skills</a>
 
            <a href="{{ route('messages') }}">Messages</a>
 

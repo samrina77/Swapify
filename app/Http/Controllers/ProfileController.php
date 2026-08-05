@@ -177,4 +177,16 @@ public function findMatches()
 
     return view('matches', compact('matches'));
 }
+public function viewProfile($id)
+{
+    $match = Profile::with([
+        'user',
+        'user.reviewsReceived'
+    ])->where('user_id', $id)->firstOrFail();
+
+    $matches = collect([$match]);
+
+    return view('matches', compact('matches'));
+}
+
 }

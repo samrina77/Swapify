@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Notifications | Swapify</title>
 
@@ -27,56 +29,51 @@
 
         body {
             min-height: 100vh;
+
             background: linear-gradient(
                 135deg,
                 var(--sage),
                 var(--cream),
                 var(--vanilla)
             );
+
             color: var(--coffee);
         }
 
+        /* Navbar */
+
         .navbar {
             background: var(--woodland);
-            padding: 18px 7%;
+            color: white;
+            padding: 18px 8%;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .brand {
+        .logo {
             color: white;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: bold;
             text-decoration: none;
         }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .nav-links a {
+        .back {
             color: white;
             text-decoration: none;
-            font-weight: 600;
-        }
-
-        .nav-links .active {
-            color: var(--deer);
-            border-bottom: 3px solid var(--deer);
-            padding-bottom: 7px;
-        }
-
-        .logout-button {
             border: 1px solid white;
-            background: transparent;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
+            padding: 10px 18px;
+            border-radius: 25px;
+            transition: 0.3s;
         }
+
+        .back:hover {
+            background: white;
+            color: var(--woodland);
+        }
+
+        /* Main Content */
 
         .container {
             width: min(900px, 92%);
@@ -99,11 +96,16 @@
             gap: 18px;
         }
 
+        /* Notification Card */
+
         .notification-card {
             background: white;
             border-radius: 18px;
             padding: 22px;
-            box-shadow: 0 10px 25px rgba(59, 51, 48, 0.12);
+
+            box-shadow:
+                0 10px 25px rgba(59, 51, 48, 0.12);
+
             border-left: 6px solid transparent;
         }
 
@@ -126,8 +128,10 @@
         .new-badge {
             background: var(--russet);
             color: white;
+
             font-size: 11px;
             font-weight: bold;
+
             padding: 5px 10px;
             border-radius: 20px;
         }
@@ -137,11 +141,15 @@
             line-height: 1.5;
         }
 
+        /* Request Information */
+
         .request-details {
             margin-top: 17px;
             padding: 16px;
+
             background: var(--cream);
             border-radius: 12px;
+
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
@@ -163,12 +171,16 @@
         .notification-time {
             display: block;
             margin-top: 14px;
+
             color: #8b817b;
             font-size: 12px;
         }
 
+        /* Actions */
+
         .actions {
             margin-top: 17px;
+
             display: flex;
             justify-content: flex-end;
             gap: 10px;
@@ -177,7 +189,9 @@
         .action-button {
             border: none;
             border-radius: 9px;
+
             padding: 10px 16px;
+
             font-weight: bold;
             cursor: pointer;
         }
@@ -187,17 +201,57 @@
             color: white;
         }
 
-        .delete-button {
-            background: #f5dddd;
-            color: #8b3030;
+        .read-button:hover {
+            background: #344536;
         }
+
+        /* Delete Button */
+
+        .delete-form {
+            display: inline-block;
+            margin: 0;
+        }
+
+        .delete-btn {
+            background: var(--russet);
+            color: white;
+
+            border: none;
+
+            padding: 11px 20px;
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #6d3519;
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 12px rgba(134, 70, 34, 0.25);
+        }
+
+        .delete-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Empty Notifications */
 
         .empty-box {
             background: white;
+
             padding: 60px 20px;
             border-radius: 18px;
+
             text-align: center;
-            box-shadow: 0 10px 25px rgba(59, 51, 48, 0.12);
+
+            box-shadow:
+                0 10px 25px rgba(59, 51, 48, 0.12);
         }
 
         .empty-box h2 {
@@ -205,24 +259,41 @@
             margin-bottom: 8px;
         }
 
+        /* Success Message */
+
         .success-message {
             background: #dff0d8;
             color: var(--woodland);
+
             padding: 13px;
             border-radius: 10px;
+
             margin-bottom: 20px;
         }
 
+        /* Mobile */
+
         @media (max-width: 760px) {
             .navbar {
-                flex-direction: column;
-                gap: 17px;
+                padding: 16px 5%;
             }
 
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 14px;
+            .logo {
+                font-size: 25px;
+            }
+
+            .back {
+                padding: 9px 15px;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .page-title {
+                font-size: 30px;
             }
 
             .request-details {
@@ -232,232 +303,246 @@
             .notes {
                 grid-column: auto;
             }
+
+            .notification-header {
+                flex-direction: column;
+            }
+
+            .actions {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
         }
-        .delete-form {
-    display: inline-block;
-    margin: 0;
-}
-
-.delete-btn {
-    background: #864622;
-    color: #ffffff;
-    border: none;
-    padding: 11px 20px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-
-.delete-btn:hover {
-    background: #6d3519;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 12px rgba(134, 70, 34, 0.25);
-}
-
-.delete-btn:active {
-    transform: translateY(0);
-}
     </style>
 </head>
 
 <body>
 
-<nav class="navbar">
+    <!-- Navbar -->
 
-    <a href="{{ route('dashboard') }}" class="brand">
-        Swapify
-    </a>
+    <div class="navbar">
 
-    <div class="nav-links">
-
-        <a href="{{ route('dashboard') }}">
-            Home
+        <a href="{{ route('dashboard') }}"
+           class="logo">
+            Swapify
         </a>
 
-        <a href="#">
-            Find Skills
+        <a href="{{ route('dashboard') }}"
+           class="back">
+            Dashboard
         </a>
-
-        <a href="#">
-            Messages
-        </a>
-
-        <a
-            href="{{ route('notifications.index') }}"
-            class="active"
-        >
-            Notifications
-        </a>
-
-        <span style="color: white;">
-            {{ auth()->user()->name }}
-        </span>
-
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-
-            <button type="submit" class="logout-button">
-                Logout
-            </button>
-        </form>
 
     </div>
 
-</nav>
+    <!-- Main Content -->
 
-<main class="container">
+    <main class="container">
 
-    <h1 class="page-title">
-        Notifications
-    </h1>
+        <h1 class="page-title">
+            Notifications
+        </h1>
 
-    <p class="page-description">
-        Schedule requests sent to you will appear here.
-    </p>
+        <p class="page-description">
+            Schedule requests sent to you will appear here.
+        </p>
 
-    @if(session('success'))
-        <div class="success-message">
-            {{ session('success') }}
-        </div>
-    @endif
+        @if(session('success'))
 
-    <div class="notification-list">
+            <div class="success-message">
+                {{ session('success') }}
+            </div>
 
-        @forelse($notifications as $notification)
+        @endif
 
-           @php
-    $data = is_array($notification->data)
-        ? $notification->data
-        : json_decode($notification->data, true);
-@endphp
+        <div class="notification-list">
 
-            <div class="notification-card
-                {{ is_null($notification->read_at) ? 'unread' : '' }}">
+            @forelse($notifications as $notification)
 
-                <div class="notification-header">
+                @php
+                    $data = is_array($notification->data)
+                        ? $notification->data
+                        : json_decode(
+                            $notification->data,
+                            true
+                        );
+                @endphp
 
-                    <div>
-                        <h3>
-                            {{ $data['student_name'] ?? 'Swapify User' }}
-                        </h3>
+                <div class="notification-card
+                    {{ is_null($notification->read_at)
+                        ? 'unread'
+                        : '' }}">
 
-                        <p class="message">
-                            {{ $data['message']
-                                ?? 'Sent you a schedule request.' }}
-                        </p>
-                    </div>
+                    <div class="notification-header">
 
-                    @if(is_null($notification->read_at))
-                        <span class="new-badge">
-                            NEW
-                        </span>
-                    @endif
+                        <div>
 
-                </div>
+                            <h3>
+                                {{ $data['student_name']
+                                    ?? 'Swapify User' }}
+                            </h3>
 
-                <div class="request-details">
+                            <p class="message">
+                                {{ $data['message']
+                                    ?? 'Sent you a schedule request.' }}
+                            </p>
 
-                    <div class="detail">
-                        <strong>Skill:</strong>
-
-                        {{ $data['skill'] ?? 'Not provided' }}
-                    </div>
-
-                    <div class="detail">
-                        <strong>Date and Time:</strong>
-
-                        @if(!empty($data['date_time']))
-                            {{ \Carbon\Carbon::parse(
-                                $data['date_time']
-                            )->format('M d, Y · h:i A') }}
-                        @else
-                            Not provided
-                        @endif
-                    </div>
-
-                    <div class="detail">
-                        <strong>Duration:</strong>
-
-                        {{ $data['duration'] ?? 'Not provided' }}
-                    </div>
-
-                    <div class="detail">
-                        <strong>Class Type:</strong>
-
-                        {{ $data['class_type'] ?? 'Not provided' }}
-                    </div>
-
-                    @if(!empty($data['notes']))
-                        <div class="detail notes">
-                            <strong>Notes:</strong>
-
-                            {{ $data['notes'] }}
                         </div>
-                    @endif
 
-                </div>
+                        @if(is_null($notification->read_at))
 
-                <span class="notification-time">
-                    Received
-                    {{ \Carbon\Carbon::parse(
-                        $notification->created_at
-                    )->diffForHumans() }}
-                </span>
+                            <span class="new-badge">
+                                NEW
+                            </span>
 
-                <div class="actions">
+                        @endif
 
-                    @if(is_null($notification->read_at))
+                    </div>
+
+                    <div class="request-details">
+
+                        <div class="detail">
+
+                            <strong>Skill:</strong>
+
+                            {{ $data['skill']
+                                ?? 'Not provided' }}
+
+                        </div>
+
+                        <div class="detail">
+
+                            <strong>Date and Time:</strong>
+
+                            @if(!empty($data['date_time']))
+
+                                {{ \Carbon\Carbon::parse(
+                                    $data['date_time']
+                                )->format(
+                                    'M d, Y · h:i A'
+                                ) }}
+
+                            @else
+
+                                Not provided
+
+                            @endif
+
+                        </div>
+
+                        <div class="detail">
+
+                            <strong>Duration:</strong>
+
+                            {{ $data['duration']
+                                ?? 'Not provided' }}
+
+                        </div>
+
+                        <div class="detail">
+
+                            <strong>Class Type:</strong>
+
+                            {{ $data['class_type']
+                                ?? 'Not provided' }}
+
+                        </div>
+
+                        @if(!empty($data['notes']))
+
+                            <div class="detail notes">
+
+                                <strong>Notes:</strong>
+
+                                {{ $data['notes'] }}
+
+                            </div>
+
+                        @endif
+
+                    </div>
+
+                    <span class="notification-time">
+
+                        Received
+
+                        {{ \Carbon\Carbon::parse(
+                            $notification->created_at
+                        )->diffForHumans() }}
+
+                    </span>
+
+                    <div class="actions">
+
+                        @if(is_null($notification->read_at))
+
+                            <form
+                                action="{{ route(
+                                    'notifications.read',
+                                    $notification->id
+                                ) }}"
+                                method="POST"
+                            >
+
+                                @csrf
+
+                                <button
+                                    type="submit"
+                                    class="action-button read-button"
+                                >
+                                    Mark as Read
+                                </button>
+
+                            </form>
+
+                        @endif
+
                         <form
                             action="{{ route(
-                                'notifications.read',
+                                'notifications.delete',
                                 $notification->id
                             ) }}"
                             method="POST"
+                            class="delete-form"
+                            onsubmit="return confirm(
+                                'Are you sure you want to delete this notification?'
+                            )"
                         >
+
                             @csrf
+                            @method('DELETE')
 
                             <button
                                 type="submit"
-                                class="action-button read-button"
+                                class="delete-btn"
                             >
-                                Mark as Read
+                                Delete
                             </button>
+
                         </form>
-                    @endif
 
-                  <form action="{{ route('notifications.delete', $notification->id) }}"
-      method="POST"
-      class="delete-form"
-      onsubmit="return confirm('Are you sure you want to delete this notification?')">
+                    </div>
 
-    @csrf
-    @method('DELETE')
-
-    <button type="submit" class="delete-btn">
-        Delete
-    </button>
-</form>
                 </div>
 
-            </div>
+            @empty
 
-        @empty
+                <div class="empty-box">
 
-            <div class="empty-box">
-                <h2>No notifications yet</h2>
+                    <h2>
+                        No notifications yet
+                    </h2>
 
-                <p>
-                    New schedule requests will appear here.
-                </p>
-            </div>
+                    <p>
+                        New schedule requests will appear here.
+                    </p>
 
-        @endforelse
+                </div>
 
-    </div>
+            @endforelse
 
-</main>
+        </div>
+
+    </main>
 
 </body>
 </html>

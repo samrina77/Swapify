@@ -10,8 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ClassScheduleController; 
 use App\Http\Controllers\ReviewController;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SkillController;
 
     Route::get('/messages', [MessageController::class, 'index'])->name('messages');
 
@@ -194,16 +194,7 @@ Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
     ->middleware('auth')
     ->name('calendar.complete');
 
-Route::get('/notifications', function () {
 
-    $notifications = DB::table('notifications')
-        ->where('notifiable_id', Auth::id())
-        ->orderByDesc('created_at')
-        ->get();
-
-    return view('notifications', compact('notifications'));
-
-})->middleware('auth')->name('notifications.index');
 
 
 Route::get('/reviews/{user}', [ReviewController::class, 'index'])
@@ -228,3 +219,18 @@ Route::middleware('auth')->group(function () {
 
 });
 
+
+
+
+Route::middleware(['auth'])->group(function () {
+
+    
+
+    Route::get('/find-skills', [SkillController::class, 'index'])
+        ->name('find.skills');
+
+});
+
+Route::get('/profile/{id}', [ProfileController::class, 'viewProfile'])
+    ->middleware('auth')
+    ->name('profile.view');
