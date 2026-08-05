@@ -205,10 +205,9 @@ Route::get('/notifications', function () {
 
 })->middleware('auth')->name('notifications.index');
 
-Route::get('/reviews/{user}/create', function (App\Models\User $user) {
-    return view('review', compact('user'));
-})->middleware('auth')->name('reviews.create');
-
+Route::get('/reviews/{user}/create', [ReviewController::class, 'create'])
+    ->middleware('auth')
+    ->name('reviews.create');
 
 Route::get('/reviews/{user}', [ReviewController::class, 'index'])
     ->middleware('auth')
