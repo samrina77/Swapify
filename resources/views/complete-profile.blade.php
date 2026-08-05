@@ -446,6 +446,144 @@
                 width: 100%;
             }
         }
+        .proof-section {
+    margin-top: 30px;
+}
+
+.proof-description {
+    margin-top: -5px;
+    margin-bottom: 24px;
+    color: #6b5b52;
+    line-height: 1.6;
+}
+
+.proof-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.proof-upload-card {
+    padding: 22px;
+    background: #f8f2e9;
+    border: 1px solid rgba(69, 89, 71, 0.22);
+    border-radius: 16px;
+    transition: 0.25s ease;
+}
+
+.proof-upload-card:hover {
+    transform: translateY(-2px);
+    border-color: #864622;
+    box-shadow: 0 8px 22px rgba(59, 51, 48, 0.10);
+}
+
+.proof-label {
+    display: block;
+    margin-bottom: 10px;
+    color: #3b3330;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.proof-file-input {
+    width: 100%;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid rgba(69, 89, 71, 0.30);
+    border-radius: 10px;
+    color: #3b3330;
+    cursor: pointer;
+}
+
+.proof-file-input::file-selector-button {
+    margin-right: 12px;
+    padding: 9px 16px;
+    background: #455947;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.proof-file-input::file-selector-button:hover {
+    background: #364638;
+}
+
+.proof-upload-card small,
+.proof-link-box small {
+    display: block;
+    margin-top: 9px;
+    color: #75675f;
+    font-size: 13px;
+}
+
+.proof-link-box {
+    padding: 22px;
+    margin-bottom: 20px;
+    background: #ffffff;
+    border: 1px solid rgba(69, 89, 71, 0.22);
+    border-radius: 16px;
+}
+
+.proof-link-input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid rgba(69, 89, 71, 0.30);
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    color: #3b3330;
+    background: #ffffff;
+}
+
+.proof-link-input:focus {
+    border-color: #864622;
+    box-shadow: 0 0 0 3px rgba(134, 70, 34, 0.12);
+}
+
+.verification-status-box {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 16px 18px;
+    background: #fff7df;
+    border: 1px solid #e4c675;
+    border-radius: 14px;
+    color: #725914;
+}
+
+.verification-status-box strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.verification-status-box p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.status-dot {
+    width: 13px;
+    height: 13px;
+    background: #d9a620;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px rgba(217, 166, 32, 0.16);
+    flex-shrink: 0;
+}
+
+.proof-error {
+    margin-top: 8px;
+    color: #b42318;
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
+    .proof-upload-grid {
+        grid-template-columns: 1fr;
+    }
+}
     </style>
 </head>
 
@@ -1132,6 +1270,97 @@
             </div>
 
         </section>
+       <section class="form-section proof-section">
+
+    <h2 class="section-heading">Portfolio & Certificates</h2>
+
+    <p class="proof-description">
+        Upload documents or work samples that demonstrate your skills.
+    </p>
+
+    <div class="proof-upload-grid">
+
+        <div class="proof-upload-card">
+            <label for="certificate" class="proof-label">
+                Certificate
+            </label>
+
+            <input
+                type="file"
+                id="certificate"
+                name="certificate"
+                class="proof-file-input"
+                accept=".pdf,.jpg,.jpeg,.png"
+            >
+
+            <small>
+                PDF, JPG or PNG — maximum 5 MB
+            </small>
+
+            @error('certificate')
+                <p class="proof-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="proof-upload-card">
+            <label for="portfolio" class="proof-label">
+                Portfolio
+            </label>
+
+            <input
+                type="file"
+                id="portfolio"
+                name="portfolio"
+                class="proof-file-input"
+                accept=".pdf,.zip,.jpg,.jpeg,.png"
+            >
+
+            <small>
+                PDF, ZIP, JPG or PNG — maximum 10 MB
+            </small>
+
+            @error('portfolio')
+                <p class="proof-error">{{ $message }}</p>
+            @enderror
+        </div>
+
+    </div>
+
+    <div class="proof-link-box">
+
+        <label for="portfolio_link" class="proof-label">
+            Portfolio Link
+        </label>
+
+        <input
+            type="url"
+            id="portfolio_link"
+            name="portfolio_link"
+            class="proof-link-input"
+            value="{{ old('portfolio_link', $profile->portfolio_link ?? '') }}"
+            placeholder="https://github.com/yourname"
+        >
+
+        <small>
+            You can add GitHub, Behance, YouTube or another portfolio link.
+        </small>
+
+        @error('portfolio_link')
+            <p class="proof-error">{{ $message }}</p>
+        @enderror
+
+    </div>
+
+    <div class="verification-status-box">
+        <span class="status-dot"></span>
+
+        <div>
+            <strong>Verification Status</strong>
+            <p>Pending Verification</p>
+        </div>
+    </div>
+
+</section>
 
         <div class="form-actions">
 

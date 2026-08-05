@@ -146,6 +146,72 @@ button{
     text-align:center;
     font-size:20px;
 }
+.proof-section {
+    margin-top: 24px;
+    padding: 20px;
+    background: #f8f2e9;
+    border: 1px solid rgba(69, 89, 71, 0.22);
+    border-radius: 16px;
+}
+
+.proof-section h3 {
+    margin: 0 0 14px;
+    color: #3b3330;
+}
+
+.proof-status {
+    margin-bottom: 16px;
+}
+
+.pending-badge,
+.verified-badge,
+.rejected-badge {
+    display: inline-block;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.pending-badge {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.verified-badge {
+    background: #d8ead5;
+    color: #455947;
+}
+
+.rejected-badge {
+    background: #f8d7da;
+    color: #842029;
+}
+
+.proof-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.proof-button {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #455947;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.proof-button:hover {
+    background: #864622;
+}
+
+.no-proof {
+    margin: 0;
+    color: #75675f;
+}
 
 </style>
 
@@ -281,6 +347,86 @@ $match->user->reviewsReceived->count();
 <span class="badge learn">{{ $skill }}</span>
 
 @endforeach
+
+<br>
+<br><br>
+
+<div class="proof-section">
+
+    <h3>Portfolio & Skill Proof</h3>
+
+    <div class="proof-status">
+
+        @if(($match->verification_status ?? 'pending') === 'verified')
+
+            <span class="verified-badge">
+                ✓ Verified
+            </span>
+
+        @elseif(($match->verification_status ?? 'pending') === 'rejected')
+
+            <span class="rejected-badge">
+                ✕ Verification Rejected
+            </span>
+
+        @else
+
+            <span class="pending-badge">
+                ● Pending Verification
+            </span>
+
+        @endif
+
+    </div>
+
+    <div class="proof-buttons">
+
+        @if($match->certificate)
+
+            <a href="{{ asset('storage/' . $match->certificate) }}"
+               target="_blank"
+               class="proof-button">
+                📄 View Certificate
+            </a>
+
+        @endif
+
+        @if($match->portfolio)
+
+            <a href="{{ asset('storage/' . $match->portfolio) }}"
+               target="_blank"
+               class="proof-button">
+                📁 View Portfolio
+            </a>
+
+        @endif
+
+        @if($match->portfolio_link)
+
+            <a href="{{ $match->portfolio_link }}"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="proof-button">
+                🔗 Visit Portfolio Link
+            </a>
+
+        @endif
+
+    </div>
+
+    @if(
+        !$match->certificate &&
+        !$match->portfolio &&
+        !$match->portfolio_link
+    )
+
+        <p class="no-proof">
+            No certificate or portfolio uploaded.
+        </p>
+
+    @endif
+
+</div>
 
 <br>
 

@@ -19,6 +19,11 @@ class Profile extends Model
         'ward',
         'skills_to_teach',
         'skills_to_learn',
+        'certificate',
+'portfolio',
+'portfolio_link',
+'verification_status',
+        
     ];
 
     protected $casts = [
