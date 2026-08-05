@@ -1348,7 +1348,7 @@ $profilePicture = $profile?->profile_picture;
                 🔍
             </div>
 
-            <h3>Find Skills</h3>
+            <h3>Find Matches</h3>
 
             <p>
                 Search for Swapify members who can teach the
