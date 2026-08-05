@@ -980,6 +980,99 @@
 #scheduleButton:active {
     transform: translateY(0);
 }
+
+.class-card{
+    background:#fff;
+    border-radius:18px;
+    padding:22px;
+    margin-top:20px;
+    border:1px solid #e6e6e6;
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+    transition:.25s;
+}
+
+.class-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 30px rgba(0,0,0,.12);
+}
+
+.class-card h3{
+    color:#455947;
+    margin-bottom:18px;
+    font-size:23px;
+}
+
+.class-card p{
+    margin:10px 0;
+    font-size:16px;
+    color:#444;
+}
+
+.status{
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.completed{
+    background:#d8f5dc;
+    color:#1b7d34;
+}
+
+.pending{
+    background:#fff3cd;
+    color:#9c6b00;
+}
+
+.review-btn{
+    display:inline-block;
+    margin-top:18px;
+    background:#864622;
+    color:white;
+    padding:12px 24px;
+    border-radius:10px;
+    font-weight:bold;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.review-btn:hover{
+    background:#455947;
+}
+
+.class-info{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin:20px 0;
+}
+
+.info-box{
+    background:#F8F2E9;
+    border:1px solid rgba(69,89,71,.15);
+    border-radius:14px;
+    padding:14px 16px;
+}
+
+.info-title{
+    display:block;
+    font-size:13px;
+    color:#777;
+    margin-bottom:6px;
+    font-weight:600;
+}
+
+.info-value{
+    color:#455947;
+    font-size:16px;
+    font-weight:700;
+}
+
+@media(max-width:700px){
+    .class-info{
+        grid-template-columns:1fr;
+    }
+}
     </style>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.21/index.global.min.js"></script>
 </head>
@@ -1081,8 +1174,8 @@ $profilePicture = $profile?->profile_picture;
 
            <a href="{{ route('messages') }}">Messages</a>
 
-           <a
-    href="{{ route('notifications.index') }}"
+           
+    <a href="{{ route('notifications.index') }}"
     class="{{ request()->routeIs('notifications.index') ? 'active' : '' }}"
 >
     Notifications
@@ -1432,99 +1525,74 @@ $profilePicture = $profile?->profile_picture;
     + Schedule Class
 </button>
     </div>
-
     <div id="calendar"></div>
-    @foreach($sessions as $session)
 
-@if($session->status == 'completed')
+    
 
-<div style="margin-top:15px;">
-
-<a href="{{ route('reviews', $session->teacher_id == auth()->id() ? $session->requester_id : $session->teacher_id) }}">
-
-<button style="
-background:#864622;
-color:white;
-padding:10px 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-">
-⭐ Give Review
-</button>
-
-</a>
-
-</div>
-
-@endif
-
-@endforeach
-    @if($sessions->count())
-
-<h3 style="margin-top:30px;color:#455947;">
+    <h2 class="section-title" style="margin-top:35px;">
     My Scheduled Classes
-</h3>
+</h2>
 
 @foreach($sessions as $session)
 
-<div style="
-background:white;
-padding:18px;
-margin-top:15px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.08);
-">
+<div class="class-card">
 
-<b>{{ $session->skill_name }}</b>
+<h3>{{ $session->skill_name }}</h3>
 
-<br><br>
+<div class="class-info">
 
-Teacher:
-{{ $session->teacher->name }}
+    <div class="info-box">
+        <span class="info-title">👨‍🏫 Teacher</span>
+        <div class="info-value">{{ $session->teacher->name }}</div>
+    </div>
 
-<br>
+    <div class="info-box">
+        <span class="info-title">🎓 Student</span>
+        <div class="info-value">{{ $session->requester->name }}</div>
+    </div>
 
-Student:
-{{ $session->requester->name }}
+    <div class="info-box">
+        <span class="info-title">📅 Date</span>
+        <div class="info-value">
+            {{ \Carbon\Carbon::parse($session->starts_at)->format('d M Y h:i A') }}
+        </div>
+    </div>
 
-<br>
+    <div class="info-box">
+        <span class="info-title">📌 Status</span>
 
-Status:
-<b>{{ ucfirst($session->status) }}</b>
+        @if($session->status=='completed')
+            <span class="status completed">✅ Completed</span>
+        @else
+            <span class="status pending">⏳ Pending</span>
+        @endif
+    </div>
 
-<br><br>
+</div>
 
-@if($session->status != 'completed')
+@if($session->status=='completed')
 
-<form
-action="{{ route('calendar.complete',$session->id) }}"
-method="POST">
-
-@csrf
-
-<button
-style="background:#455947;">
-✔ Mark as Completed
-</button>
-
-</form>
-
+    <a href="{{ route('reviews.create', $session->teacher_id == auth()->id() ? $session->requester_id : $session->teacher_id) }}"
+class="review-btn">
+⭐ Give Review
+</a>
 @else
 
-<a href="{{ route('reviews',$session->teacher_id) }}">
-<button style="background:#864622;">
-⭐ Give Review
-</button>
-</a>
+    <form action="{{ route('calendar.complete',$session->id) }}" method="POST">
+        @csrf
+        <button type="submit" class="review-btn">
+            ✅ Mark as Completed
+        </button>
+    </form>
 
 @endif
+</p>
 
 </div>
 
 @endforeach
 
-@endif
+
 
 </section>
     </section>
@@ -1551,6 +1619,7 @@ style="background:#455947;">
     </option>
 @endforeach
     </select>
+    
 
 
     <label for="skill_name">Class or Skill</label>

@@ -196,6 +196,9 @@ Route::post('/calendar/schedule', [ClassScheduleController::class, 'store'])
 
 
 
+Route::get('/reviews/{user}/create', [ReviewController::class, 'create'])
+    ->middleware('auth')
+    ->name('reviews.create');
 
 Route::get('/reviews/{user}', [ReviewController::class, 'index'])
     ->middleware('auth')

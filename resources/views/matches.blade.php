@@ -113,7 +113,21 @@ body{
 .learn{
     background:var(--vanilla);
 }
+.action-button{
+    display:inline-block;
+    background:#455947;
+    color:white;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:10px;
+    margin-top:10px;
+    margin-bottom:15px;
+    font-weight:bold;
+}
 
+.action-button:hover{
+    background:#864622;
+}
 button{
     margin-top:20px;
     border:none;
@@ -193,9 +207,7 @@ color:#455947;">
 </div>
 <h2>{{ $match->user->name }}</h2>
 
-<a href="{{ route('reviews', $match->user->id) }}">
-    Reviews ⭐
-</a>
+
 @php
 
 $rating = round(
@@ -209,16 +221,17 @@ $match->user->reviewsReceived->count();
 @endphp
 
 <p>
-
-⭐
-
-{{ $rating ?: '0.0' }}
-
+⭐ {{ $rating ?: '0.0' }}
 ({{ $totalReviews }} Reviews)
-
 </p>
-<div class="info-grid">
 
+<a href="{{ route('reviews', $match->user->id) }}"
+   class="action-button"
+   style="margin-bottom:20px;">
+    ⭐ View Reviews
+</a>
+
+<div class="info-grid">
     <div class="info-box">
         <strong>📧 Email</strong>
         {{ $match->user->email }}
