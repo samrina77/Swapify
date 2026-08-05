@@ -8,7 +8,25 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    // Review list dekhaucha
+    public function create(User $user)
+{
+    $review = $user->reviewsReceived()
+        ->with('reviewer')
+        ->latest()
+        ->get();
+
+    $averageRating = round(
+        $user->reviewsReceived()->avg('rating'),
+        1
+    );
+
+    return view('review', compact(
+        'user',
+        'review',
+        'averageRating'
+    ))->with('showForm', true);
+}
+   
     public function index(User $user)
     {
         $review = $user->reviewsReceived()
@@ -25,7 +43,7 @@ class ReviewController extends Controller
             'user',
             'review',
             'averageRating'
-        ));
+        ))->with('showForm', false);
     }
 
     
