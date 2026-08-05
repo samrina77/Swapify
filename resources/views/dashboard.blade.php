@@ -1172,7 +1172,7 @@ $profilePicture = $profile?->profile_picture;
 
       <a href="{{ route('find.skills') }}">Find Skills</a>
 
-           <a href="{{ route('messages') }}">Messages</a>
+           <a href="{{ route('messages.index') }}">Messages</a>
 
            
     <a href="{{ route('notifications.index') }}"
@@ -1396,7 +1396,7 @@ $profilePicture = $profile?->profile_picture;
                 skill exchange sessions.
             </p>
 
-            <a href="{{ route('messages') }}" class="action-button">
+            <a href="{{ route('messages.index') }}" class="action-button">
     Open Messages
 </a>
 
