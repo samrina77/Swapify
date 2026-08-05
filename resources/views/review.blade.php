@@ -211,8 +211,8 @@ body{
 
 <div class="review-container">
 
-<a href="{{ url()->previous() }}" class="back-btn">
- Back
+<a href="{{ route('dashboard') }}" class="back-btn">
+    Back
 </a>
 
 <h1 class="review-title">
