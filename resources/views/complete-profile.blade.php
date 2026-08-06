@@ -804,10 +804,7 @@
 
                     <h3>Profile Picture</h3>
 
-                    <p>
-                        Upload a JPG, JPEG or PNG picture smaller
-                        than 3 MB.
-                    </p>
+                
 
                     <label
                         for="profile_picture"
@@ -1293,9 +1290,7 @@
                 accept=".pdf,.jpg,.jpeg,.png"
             >
 
-            <small>
-                PDF, JPG or PNG — maximum 5 MB
-            </small>
+        
 
             @error('certificate')
                 <p class="proof-error">{{ $message }}</p>
@@ -1315,9 +1310,7 @@
                 accept=".pdf,.zip,.jpg,.jpeg,.png"
             >
 
-            <small>
-                PDF, ZIP, JPG or PNG — maximum 10 MB
-            </small>
+            
 
             @error('portfolio')
                 <p class="proof-error">{{ $message }}</p>
