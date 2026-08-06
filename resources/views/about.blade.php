@@ -8,9 +8,18 @@
 <style>
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:#F4E8D8;
-    color:#383330;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    min-height:100vh;
+
+    background:
+    linear-gradient(rgba(69,89,71,0.65), rgba(134,70,34,0.45)),
+    radial-gradient(circle at top left,#8FB59A 0%,transparent 40%),
+    radial-gradient(circle at bottom right,#D8C3A5 0%,transparent 35%),
+    linear-gradient(135deg,#3F5D50,#6D8B74,#D8C3A5);
+
+    background-size:cover;
+    background-attachment:fixed;
 }
 
 .navbar{
@@ -23,12 +32,16 @@ body{
 }
 
 .container{
-    width:80%;
-    margin:40px auto;
-    background:white;
-    padding:35px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    width:85%;
+    max-width:1100px;
+    margin:60px auto;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-radius:20px;
+    padding:40px;
+    border:1px solid rgba(255,255,255,.25);
+    box-shadow:0 15px 35px rgba(0,0,0,.2);
 }
 
 h1{
@@ -72,6 +85,7 @@ ul,ol{
     padding:15px;
     margin-top:40px;
 }
+
 </style>
 
 </head>
@@ -84,6 +98,7 @@ ul,ol{
 <div class="container">
 
 <h1>About Swapify</h1>
+
 
 <p>
 <b>Swapify</b> is an innovative skill-sharing platform where people can learn,
@@ -183,7 +198,7 @@ every skill has value.
 </div>
 
 <div class="footer">
-© 2026 Swapify | Learn • Share • Grow Together
+© 2026 Swapify | Where Every Skill Finds a Learner.
 </div>
 
 </body>
