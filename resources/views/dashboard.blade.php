@@ -392,7 +392,7 @@
 
         .action-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(5, minmax(0, 1fr));
             gap: 20px;
         }
 
@@ -1441,7 +1441,23 @@ $profilePicture = $profile?->profile_picture;
 </a>
 
         </article>
+<article class="action-card">
 
+    <div class="action-icon">
+        👑
+    </div>
+
+    <h3>Premium Learning</h3>
+
+    <p>
+        Unlock premium courses and learn from expert instructors with unlimited access.
+    </p>
+
+    <a href="{{ route('premium.learning') }}" class="action-button">
+        Go Premium
+    </a>
+
+</article>
     </section>
 
     <div class="section-heading-row">
@@ -1500,6 +1516,7 @@ $profilePicture = $profile?->profile_picture;
             </div>
 
         </article>
+
 
         <article class="skills-card">
 
