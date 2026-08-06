@@ -34,4 +34,5 @@ class SkillController extends Controller
 
         return view('find-skills', compact('users', 'search'));
     }
+    
 }

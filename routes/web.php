@@ -176,6 +176,11 @@ Route::get('/add-skills', function () {
     return view('add-skills');
 })->name('add.skills');
 
+Route::post('/skills/store',
+[SkillController::class,'store'])
+->middleware('auth')
+->name('skills.store');
+
 Route::view('/premium-learning', 'premium-learning')
     ->name('premium.learning');
     
