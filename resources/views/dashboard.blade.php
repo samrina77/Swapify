@@ -464,6 +464,27 @@
             background: var(--woodland);
         }
 
+        .video-btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:12px 24px;
+    border-radius:30px;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:700;
+    color:#fff;
+    background:linear-gradient(135deg,#864622,#C78B53);
+    box-shadow:0 8px 18px rgba(134,70,34,.25);
+    transition:.3s ease;
+}
+
+.video-btn:hover{
+    background:#455947;
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(69,89,71,.30);
+    color:#fff;
+}
+
         /* Skills */
 
         .skills-grid {
@@ -1415,9 +1436,9 @@ $profilePicture = $profile?->profile_picture;
                 recorded learning videos.
             </p>
 
-            <a href="#" class="action-button">
-                View Classes
-            </a>
+            <a href="{{ route('video.classes') }}" class="action-button video-btn">
+    View Classes
+</a>
 
         </article>
 
@@ -1437,6 +1458,7 @@ $profilePicture = $profile?->profile_picture;
         </a>
 
     </div>
+    
 
     <section class="skills-grid">
 
