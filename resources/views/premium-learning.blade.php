@@ -24,9 +24,9 @@ text-decoration:none;
 }
 
 .top-bar{
-    width:90%;
     max-width:1200px;
-    margin:25px auto 0;
+    margin:25px 0 0 10px;
+    padding:0;
 }
 
 .back-btn{
@@ -66,7 +66,7 @@ margin-bottom:20px;
 
 .hero h1{
 font-size:48px;
-margin-bottom:20px;
+margin-bottom:10px;
 }
 
 .hero p{
