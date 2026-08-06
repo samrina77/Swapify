@@ -251,6 +251,7 @@ Route::post('/messages/send',
 Route::get('/messages', [MessageController::class, 'index'])
     ->name('messages.index');
 
-    Route::get('/video-classes', function () {
-    return view('video-classes');
-})->middleware('auth')->name('video.classes');
+    Route::post(
+    '/schedule-requests/{scheduleId}/approve/{notificationId}',
+    [ClassScheduleController::class, 'approve']
+)->name('schedule.approve');

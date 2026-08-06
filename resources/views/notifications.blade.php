@@ -313,6 +313,14 @@
                 flex-wrap: wrap;
             }
         }
+        .approve-button {
+    background: #455947;
+    color: white;
+}
+
+.approve-button:hover {
+    background: #344436;
+}
     </style>
 </head>
 
@@ -472,6 +480,33 @@
                     </span>
 
                     <div class="actions">
+                        @php
+    $data = is_array($notification->data)
+        ? $notification->data
+        : json_decode($notification->data, true);
+@endphp
+
+@if(
+    isset($data['schedule_id']) &&
+    ($data['status'] ?? '') === 'pending'
+)
+    <form
+        action="{{ route('schedule.approve', [
+            'scheduleId' => $data['schedule_id'],
+            'notificationId' => $notification->id
+        ]) }}"
+        method="POST"
+    >
+        @csrf
+
+        <button
+            type="submit"
+            class="action-button approve-button"
+        >
+            Approve
+        </button>
+    </form>
+@endif
 
                         @if(is_null($notification->read_at))
 

@@ -137,4 +137,57 @@ public function complete(ClassSchedule $schedule)
         'Class marked as completed.'
     );
 }
+
+public function approve($scheduleId, $notificationId)
+{
+    $teacherId = Auth::id();
+
+    $schedule = ClassSchedule::where('id', $scheduleId)
+        ->where('teacher_id', $teacherId)
+        ->firstOrFail();
+
+    if ($schedule->status === 'approved') {
+        return back()->with('success', 'This class has already been approved.');
+    }
+
+    $schedule->status = 'approved';
+    $schedule->save();
+
+    DB::table('notifications')
+        ->where('id', $notificationId)
+        ->where('notifiable_id', $teacherId)
+        ->update([
+            'read_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+    $teacher = User::findOrFail($teacherId);
+
+    DB::table('notifications')->insert([
+        'id' => (string) Str::uuid(),
+        'type' => 'schedule_approved',
+        'notifiable_type' => User::class,
+        'notifiable_id' => $schedule->requester_id,
+
+        'data' => json_encode([
+            'schedule_id' => $schedule->id,
+            'teacher_name' => $teacher->name,
+            'skill' => $schedule->skill_name,
+            'date_time' => $schedule->starts_at,
+            'status' => 'approved',
+            'message' => 'Your class with ' .
+                $teacher->name .
+                ' has been approved.',
+        ]),
+
+        'read_at' => null,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    return back()->with(
+        'success',
+        'Class approved successfully.'
+    );
+}
 }
