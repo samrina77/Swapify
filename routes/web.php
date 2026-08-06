@@ -250,3 +250,8 @@ Route::post('/messages/send',
 
 Route::get('/messages', [MessageController::class, 'index'])
     ->name('messages.index');
+
+    Route::post(
+    '/schedule-requests/{scheduleId}/approve/{notificationId}',
+    [ClassScheduleController::class, 'approve']
+)->name('schedule.approve');
