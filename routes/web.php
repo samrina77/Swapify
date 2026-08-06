@@ -255,3 +255,7 @@ Route::get('/messages', [MessageController::class, 'index'])
     '/schedule-requests/{scheduleId}/approve/{notificationId}',
     [ClassScheduleController::class, 'approve']
 )->name('schedule.approve');
+
+Route::get('/video-classes', function () {
+    return view('video-classes');
+})->name('video.classes');
