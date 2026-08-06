@@ -175,6 +175,9 @@ Route::post('/verify-otp', function (Request $request) {
 Route::get('/add-skills', function () {
     return view('add-skills');
 })->name('add.skills');
+
+Route::view('/premium-learning', 'premium-learning')
+    ->name('premium.learning');
     
 
 Route::get('/calendar', [ClassScheduleController::class, 'index'])
