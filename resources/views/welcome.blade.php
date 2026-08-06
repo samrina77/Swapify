@@ -270,9 +270,13 @@ nav ul li{
 Where Every Skill Finds a Learner.
 </p>
 
+
 <a href="{{ route('login') }}" class="btn">
 Get Started
 </a>
+
+
+
 
 </div>
 
